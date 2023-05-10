@@ -170,3 +170,43 @@ out/
 
 # Simulation GUI and other tools window save file
 *-window.json
+### Errors 3130 specific ###
+# CMake
+cmake-build-*/
+
+
+# File-based project format
+*.iws
+
+
+# IntelliJ
+out/
+.idea/
+*.iml
+
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+
+.vscode/settings.json
+
+
+simgui-ds.json
+
+
+simgui-window.json
+
+
+simgui.json
+
+
+.SysId/
+
