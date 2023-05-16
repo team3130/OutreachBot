@@ -61,6 +61,9 @@ public final class Constants {
   }
   public static class Chassis {
     //Constants for Chassis
+    public static class CAN {
+      //CAN IDs for Chassis
+    }
   }
   public static class Shooter {
     //Constants for Shooter
