@@ -55,6 +55,11 @@ public class Chassis extends SubsystemBase {
     m_MBR.setSpeed(velocity);
     //velocities are kept the same for all motors because motor spin direction is reversed for the right-side motors on the bot
   }
+ 
+  public double getMotorVelocity(WPITalonFX motor){
+    return (motor.getSelectedSensorVelocity() / Constants.Chassis.EncoderResolution
+                * (Constants.Chassis.GearRatio) * (Math.PI * Constants.Chassis.WheelDiameter)) * 10;
+  }
 
   @Override
   public void periodic() {
