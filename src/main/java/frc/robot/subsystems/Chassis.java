@@ -9,29 +9,36 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ExampleSubsystem extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
-
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public CommandBase exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
+public class Chassis extends SubsystemBase {
+  
+  private final WPITalonFX m_MFL; //motor-front-left
+  private final WPITalonFX m_MFR; 
+  private final WPITalonFX m_MBL;
+  private final WPITalonFX m_MBR;
+  
+  public Chassis() {
+    m_MFL = new WPITalonFX(Constants.Chassis.CAN.MFL);
+    m_MFR = new WPITalonFX(Constants.Chassis.CAN.MFR);
+    m_MBL = new WPITalonFX(Constants.Chassis.CAN.MBL);
+    m_MBR = new WPITalonFX(Constants.Chassis.CAN.MBR);
+    
+    m_MFL.configFactoryDefault();
+    m_MFR.configFactoryDefault();
+    m_MBL.configFactoryDefault();
+    m_MBR.configFactoryDefault();
+    
+    m_MFL.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_MFR.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_MBL.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_MBR.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+      
+    m_MFL.enableVoltageCompensation(true);
+    m_MFR.enableVoltageCompensation(true);
+    m_MBL.enableVoltageCompensation(true);
+    m_MBR.enableVoltageCompensation(true);
   }
 
-  /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
-   *
-   * @return value of some boolean subsystem state, such as a digital sensor.
-   */
+ 
   public boolean exampleCondition() {
     // Query some boolean state, such as a digital sensor.
     return false;
