@@ -57,8 +57,8 @@ public class Chassis extends SubsystemBase {
   }
  
   public double getMotorVelocity(WPITalonFX motor){
-    return (motor.getSelectedSensorVelocity() / Constants.Chassis.EncoderResolution
-                * (Constants.Chassis.GearRatio) * (Math.PI * Constants.Chassis.WheelDiameter)) * 10;
+    return (motor.getSelectedSensorVelocity() / Constants.Chassis.encoderResolution
+                * (Constants.Chassis.gearRatio) * (Math.PI * Constants.Chassis.wheelDiameter)) * 10;
   }
 
   @Override
