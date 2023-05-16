@@ -39,9 +39,21 @@ public class Chassis extends SubsystemBase {
   }
 
  
-  public boolean exampleCondition() {
-    // Query some boolean state, such as a digital sensor.
-    return false;
+  public void driveStraight(double input//joystick y-input){
+    double velocity = (Math.abs(input)/input) * input * input;
+    m_MFL.setSpeed(velocity);
+    m_MFR.setSpeed(velocity * -1);
+    m_MBL.setSpeed(velocity);
+    m_MBR.setSpeed(velocity * -1);
+  }
+  
+  public void turn(double input){
+    double velocity = (Math.abs(input)/input) * input * input;
+    m_MFL.setSpeed(velocity);
+    m_MFR.setSpeed(velocity);
+    m_MBL.setSpeed(velocity);
+    m_MBR.setSpeed(velocity);
+    //velocities are kept the same for all motors because motor spin direction is reversed for the right-side motors on the bot
   }
 
   @Override
