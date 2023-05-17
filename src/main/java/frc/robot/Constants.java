@@ -54,24 +54,19 @@ public final class Constants {
   public static final int LST_AXS_RJOYSTICKX = 4;
   public static final int LST_AXS_RJOYSTICKY = 5;
 }
+  public static class CAN {
+    //All CAN IDs for Bot
+  }
   public static class Chassis {
     //Constants for Chassis
-    public static class CAN {
-      //CAN IDs for Chassis
-    }
   }
   public static class Shooter {
     //Constants for Shooter
-    public static class CAN {
-      //CAN IDs for Shooter
-    }
   }
   public static class Intake {
     //Constants for Intake
-    public static class CAN {
-      //CAN IDs for Intake
-    }
   }
+  
   
   
 }
