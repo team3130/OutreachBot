@@ -36,8 +36,12 @@ public class Chassis extends SubsystemBase {
     m_MFR.enableVoltageCompensation(true);
     m_MBL.enableVoltageCompensation(true);
     m_MBR.enableVoltageCompensation(true);
+    
+    m_MFL.setInverted(true);
+    m_MFR.setInverted(true);
+    m_MBL.setInverted(true);
+    m_MBR.setInverted(true);
   }
-
  
   public void driveStraight(double input//joystick y-input){
     double velocity = (Math.abs(input)/input) * input * input;
@@ -47,15 +51,6 @@ public class Chassis extends SubsystemBase {
     m_MBR.setSpeed(velocity * -1);
   }
   
-  public void turn(double input){
-    double velocity = (Math.abs(input)/input) * input * input;
-    m_MFL.setSpeed(velocity);
-    m_MFR.setSpeed(velocity);
-    m_MBL.setSpeed(velocity);
-    m_MBR.setSpeed(velocity);
-    //velocities are kept the same for all motors because motor spin direction is reversed for the right-side motors on the bot
-  }
- 
   public double getMotorVelocity(WPITalonFX motor){
     return (motor.getSelectedSensorVelocity() / Constants.Chassis.encoderResolution
                 * (Constants.Chassis.gearRatio) * (Math.PI * Constants.Chassis.wheelDiameter)) * 10;
