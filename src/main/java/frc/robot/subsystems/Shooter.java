@@ -10,23 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-  private final WPI_TalonFX flywheel;
-  public Shooter() {
-    flywheel = new WPI_TalonFX(0);
-  }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public CommandBase exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
+  public Shooter() {
   }
 
   /**
