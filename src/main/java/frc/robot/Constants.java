@@ -54,15 +54,15 @@ public final class Constants {
   public static final int LST_AXS_RJOYSTICKX = 4;
   public static final int LST_AXS_RJOYSTICKY = 5;
 }
-  public static class Chassis {
-    //Constants for Chassis
-    public static class CAN {
-      //CAN IDs for Chassis
+  public static class CAN {
+      //All CAN IDs for Bot
       public static final int MFL = 0; // TO-DO
       public static final int MFR = 0; // TO-DO
       public static final int MBL = 0; // TO-DO
       public static final int MBR = 0; // TO-DO
     }
+  public static class Chassis {
+    //Constants for Chassis
     public static final int maxVoltage = 0; // TO-DO
     //max voltage for chassis motors
     public static final int encoderResolution = 0; // TO-DO
@@ -71,16 +71,9 @@ public final class Constants {
   }
   public static class Shooter {
     //Constants for Shooter
-    public static class CAN {
-      //CAN IDs for Shooter
-    }
   }
   public static class Intake {
     //Constants for Intake
-    public static class CAN {
-      //CAN IDs for Intake
-    }
   }
-  
   
 }
