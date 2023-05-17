@@ -4,39 +4,50 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  private final WPI_TalonFX flywheel;
+  private final WPI_TalonSRX flywheel;
+  private final WPI_TalonSRX leftIndexer;
+  private final WPI_TalonSRX rightIndexer;
+
   public Shooter() {
-    flywheel = new WPI_TalonFX(0);
+    flywheel = new WPI_TalonSRX(Constants.CAN.SHOOTERFLYWHEEL);
+    leftIndexer = new WPI_TalonSRX(Constants.CAN.LEFTINDEXER);
+    rightIndexer = new WPI_TalonSRX(Constants.CAN.RIGHTINDEXER);
+
+    flywheel.configFactoryDefault();
+    flywheel.setInverted(false);
+    leftIndexer.configFactoryDefault();
+    leftIndexer.setInverted(false);
+    rightIndexer.configFactoryDefault();
+    rightIndexer.setInverted(false);
   }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public CommandBase exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
+  public void runFlywheel() {
+    flywheel.set(ControlMode.PercentOutput, 0.75);
   }
 
-  /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
-   *
-   * @return value of some boolean subsystem state, such as a digital sensor.
-   */
-  public boolean exampleCondition() {
-    // Query some boolean state, such as a digital sensor.
-    return false;
+  public void spinIndexer() {
+    leftIndexer.set(ControlMode.PercentOutput, 0.4);
+    rightIndexer.set(ControlMode.PercentOutput, 0.4);
+  }
+
+  public void reverseIndexer() {
+    leftIndexer.set(ControlMode.PercentOutput, -0.4);
+    rightIndexer.set(ControlMode.PercentOutput, -0.4);
+  }
+
+  public void stopFlywheel() {
+    flywheel.stopMotor();
+  }
+
+  public void stopIndexer() {
+    leftIndexer.stopMotor();
+    rightIndexer.stopMotor();
   }
 
   @Override
