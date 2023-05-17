@@ -71,6 +71,8 @@ public final class Constants {
     public static class CAN {
       //CAN IDs for Chassis
     }
+  public static class Chassis {
+    //Constants for Chassis
     public static final int maxVoltage = 0; // TO-DO
     //max voltage for chassis motors
     public static final int encoderResolution = 0; // TO-DO
@@ -81,8 +83,7 @@ public final class Constants {
     //Constants for Shooter
   }
   public static class Intake {
-
-
+    //Constants for Intake
   }
   
 }
