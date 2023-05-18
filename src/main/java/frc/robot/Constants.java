@@ -68,6 +68,24 @@ public final class Constants {
     public static final int encoderResolution = 0; // TO-DO
     public static final int gearRatio = 0; // TO-DO
     public static final int wheelDiameter = 0; // TO-DO
+
+    public static final int kDriveDeadband = 0; // TO-DO
+
+    public static final int kEncoderResolution = 0; // TO-DO
+    public static final int kChassisGearRatio = 0; // TO-DO
+    public static final int kWheelDiameter = 0; // TO-DO
+
+    public static final int ChassiskS = 0; // TO-DO
+    public static final int ChassiskV = 0; // TO-DO
+    public static final int ChassiskA = 0; // TO-DO
+
+    public static final int LChassiskP = 0; // TO-DO
+    public static final int LChassiskI = 0; // TO-DO
+    public static final int LChassiskD = 0; // TO-DO
+    public static final int RChassiskP = 0; // TO-DO
+    public static final int RChassiskI = 0; // TO-DO
+    public static final int RChassiskD = 0; // TO-DO
+
   }
   public static class Shooter {
     //Constants for Shooter
