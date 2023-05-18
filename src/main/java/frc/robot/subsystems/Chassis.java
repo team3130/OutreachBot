@@ -16,9 +16,11 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.sensors.Navx;
 
 public class Chassis extends SubsystemBase {
   
@@ -35,6 +37,8 @@ public class Chassis extends SubsystemBase {
   private final SimpleMotorFeedforward m_feedforward;
   private final PIDController m_leftPIDController;
   private final PIDController m_rightPIDConttroller;
+
+  private final Navx m_navx = Navx.GetInstance();
   
   public Chassis() {
     m_MFL = new WPI_TalonFX(Constants.CAN.MFL);
@@ -228,5 +232,12 @@ public class Chassis extends SubsystemBase {
       m_motorsLeft.setVoltage(leftVolts);
       m_motorsRight.setVoltage(rightVolts);
       m_drive.feed();
+  }
+
+  /**
+     * Output values to shuffleboard
+     */
+    public void outputToShuffleboard() {
+      SmartDashboard.putNumber("Navx Heading", m_navx.getHeading());
   }
 }
