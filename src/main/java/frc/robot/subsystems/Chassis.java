@@ -73,6 +73,7 @@ public class Chassis extends SubsystemBase {
     m_drive.setDeadband(Constants.Chassis.kDriveDeadband);
     m_drive.setSafetyEnabled(false);
 
+    //these would only be for auton. 6-wheel doesn't need pidf to drive
     m_feedforward = new SimpleMotorFeedforward(Constants.Chassis.ChassiskS, Constants.Chassis.ChassiskV, Constants.Chassis.ChassiskA);
     m_leftPIDController = new PIDController(Constants.Chassis.LChassiskP, Constants.Chassis.LChassiskI, Constants.Chassis.LChassiskD);
     m_rightPIDConttroller = new PIDController(Constants.Chassis.RChassiskP, Constants.Chassis.RChassiskI, Constants.Chassis.RChassiskD);
