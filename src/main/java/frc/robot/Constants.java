@@ -96,6 +96,10 @@ public final class Constants {
     public static final int RChassiskI = 0; // TO-DO
     public static final int RChassiskD = 0; // TO-DO
 
+    // Navx
+
+    public static final boolean kNavxReversed = false; // TO-DO
+
   }
   public static class Shooter {
     //Constants for Shooter
