@@ -8,19 +8,20 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Chassis extends SubsystemBase {
   
-  private final WPITalonFX m_MFL; //motor-front-left
-  private final WPITalonFX m_MFR; 
-  private final WPITalonFX m_MBL;
-  private final WPITalonFX m_MBR;
+  private final WPI_TalonFX m_MFL; //motor-front-left
+  private final WPI_TalonFX m_MFR; 
+  private final WPI_TalonFX m_MBL;
+  private final WPI_TalonFX m_MBR;
   
   public Chassis() {
-    m_MFL = new WPITalonFX(Constants.Chassis.CAN.MFL);
-    m_MFR = new WPITalonFX(Constants.Chassis.CAN.MFR);
-    m_MBL = new WPITalonFX(Constants.Chassis.CAN.MBL);
-    m_MBR = new WPITalonFX(Constants.Chassis.CAN.MBR);
+    m_MFL = new WPI_TalonFX(Constants.CAN.MFL);
+    m_MFR = new WPI_TalonFX(Constants.CAN.MFR);
+    m_MBL = new WPI_TalonFX(Constants.CAN.MBL);
+    m_MBR = new WPI_TalonFX(Constants.CAN.MBR);
     
     m_MFL.configFactoryDefault();
     m_MFR.configFactoryDefault();
@@ -43,15 +44,9 @@ public class Chassis extends SubsystemBase {
     m_MBR.setInverted(true);
   }
  
-  public void driveStraight(double input//joystick y-input){
-    double velocity = (Math.abs(input)/input) * input * input;
-    m_MFL.setSpeed(velocity);
-    m_MFR.setSpeed(velocity * -1);
-    m_MBL.setSpeed(velocity);
-    m_MBR.setSpeed(velocity * -1);
-  }
   
-  public double getMotorVelocity(WPITalonFX motor){
+  
+  public double getMotorVelocity(WPI_TalonFX motor){
     return (motor.getSelectedSensorVelocity() / Constants.Chassis.encoderResolution
                 * (Constants.Chassis.gearRatio) * (Math.PI * Constants.Chassis.wheelDiameter)) * 10;
   }
