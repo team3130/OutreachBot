@@ -64,9 +64,9 @@ public final class Constants {
     //Constants for Shooter
   }
   public static class Intake {
-    //Constants for Intake
+
+    public static final int CAN_Intake_Motor = 0; // TO-DO
+
   }
-  
-  
   
 }
