@@ -28,7 +28,9 @@ public class Shooter extends SubsystemBase {
   private double flywheelD = 0;
   private double rpm = 100d;
 
-  private final ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+  //private final ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+
+  /*
 
   private final GenericEntry flywheelRPMSetpoint = tab.add("Flywheel RPM", rpm).getEntry();
   private final GenericEntry currentRPM = tab.add("Flywheel Current RPM", 0).getEntry();
@@ -38,6 +40,7 @@ public class Shooter extends SubsystemBase {
   private final GenericEntry D = tab.add("Top Flywheel D", flywheelD).getEntry();
   private final GenericEntry V = tab.add("Top Flywheel V", flywheelF).getEntry();
 
+*/
 
   public Shooter() {
     flywheel = new WPI_TalonSRX(Constants.CAN.SHOOTERFLYWHEEL);
@@ -53,7 +56,6 @@ public class Shooter extends SubsystemBase {
 
     flywheelFeedForward = new SimpleMotorFeedforward(0, flywheelF);
     flywheelPID = new PIDController(flywheelP, flywheelI, flywheelD);
-
 
   }
 
@@ -133,15 +135,16 @@ public class Shooter extends SubsystemBase {
   public double getCurrentFlywheelInRPM(){
     return this.getCurrentFlywheelNative() / Constants.Shooter.FlywheelRPMtoNativeUnitsScalar;
   }
-
+/*
   public void outputToShuffleboard(){
     SmartDashboard.putNumber("Flywheel P", flywheelP);
     SmartDashboard.putNumber("Flywheel I", flywheelI);
     SmartDashboard.putNumber("Flywheel D", flywheelD);
     SmartDashboard.putNumber("Flywheel F", flywheelF);
     SmartDashboard.putNumber("Flywheel RPM", rpm);
+    }
+    */
 
-  }
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Shooter");

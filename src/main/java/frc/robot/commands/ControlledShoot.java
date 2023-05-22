@@ -13,12 +13,6 @@ public class ControlledShoot extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Shooter m_shooter;
   private Timer timer;
-
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param shooter The subsystem used by this command.
-   */
   public ControlledShoot(Shooter shooter) {
     m_shooter = shooter;
     timer = new Timer();

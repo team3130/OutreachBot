@@ -12,10 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.Unshoot;
+import frc.robot.commands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
 
@@ -41,7 +38,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    m_shooter.outputToShuffleboard();
+    //m_shooter.outputToShuffleboard();
   }
 
   /**
@@ -64,6 +61,8 @@ public class RobotContainer {
 
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new ControlledShoot(m_shooter));
+
   }
 
 
