@@ -19,6 +19,12 @@ public final class Constants {
     public static final int LEFTINDEXER = 2;
     public static final int RIGHTINDEXER = 3;
   }
+  public static class Shooter {
+    public static final double VersaPlanetaryTicksPerRevolution = 1024;
+    public static final double FlywheelGearRatio = 1d/5d;
+    public static final double FlywheelRPMtoNativeUnitsScalar = (VersaPlanetaryTicksPerRevolution / (10.0 * 60.0))/FlywheelGearRatio;
+
+  }
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
