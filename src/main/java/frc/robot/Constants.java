@@ -55,6 +55,8 @@ public final class Constants {
   public static final int LST_AXS_RJOYSTICKY = 5;
 }
   public static class CAN {
+    public static final int Intake_Motor = 0; // TO-DO
+
     //All CAN IDs for Bot
   }
   public static class Chassis {
@@ -65,7 +67,6 @@ public final class Constants {
   }
   public static class Intake {
 
-    public static final int CAN_Intake_Motor = 0; // TO-DO
 
   }
   

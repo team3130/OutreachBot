@@ -4,31 +4,31 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   
-  private final WPI_TalonFX m_motor;
+  private final WPI_TalonSRX m_motor;
+  private static final double speed = 0.5;
 
   public Intake() {
-    m_motor = new WPI_TalonFX(Constants.Intake.CAN_Intake_Motor);
-
+    m_motor = new WPI_TalonSRX(Constants.CAN.Intake_Motor);
     m_motor.setInverted(false);
-
     m_motor.configVoltageCompSaturation(9.5);
     m_motor.enableVoltageCompensation(true);
-    
   }
 
-  public void setSpeed(double speed) {
+  public void spinIntake() {
     m_motor.set(speed);
   }
 
-  public void disable() {
+  public void spoutTake() {
+    m_motor.set(-speed);
+  }
+
+  public void stop() {
     m_motor.set(0);
   }
 

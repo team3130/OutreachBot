@@ -4,13 +4,13 @@
 
 package frc.robot.commands.Intake;
 
-import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
 
 /** An example command that uses an example subsystem. */
-public class Spintake extends CommandBase {
+public class SpoutTake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  
+
   private final Intake m_intake;
 
   /**
@@ -18,7 +18,7 @@ public class Spintake extends CommandBase {
    *
    * @param intake The subsystem used by this command.
    */
-  public Spintake(Intake intake) {
+  public SpoutTake(Intake intake) {
     m_intake = intake;
     addRequirements(intake);
   }
@@ -26,12 +26,14 @@ public class Spintake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.spinIntake();
+    m_intake.spoutTake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
