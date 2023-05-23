@@ -5,13 +5,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   
   private final WPI_TalonSRX m_motor;
-  private static final double speed = 0.5;
+  private double speed = 0.5;
 
   public Intake() {
     m_motor = new WPI_TalonSRX(Constants.CAN.Intake_Motor);
@@ -26,6 +27,14 @@ public class Intake extends SubsystemBase {
 
   public void spoutTake() {
     m_motor.set(-speed);
+  }
+
+  public double getIntake() {
+    return speed;
+  }
+
+  public void setIntake(double newSpeed) {
+    speed = newSpeed;
   }
 
   public void stop() {
@@ -45,4 +54,11 @@ public class Intake extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    builder.setSmartDashboardType("Intake");
+    builder.addDoubleArrayProperty("Intake speed", this::getIntake, this::setIntake);
+  }
+
 }
