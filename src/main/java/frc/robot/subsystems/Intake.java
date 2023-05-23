@@ -58,7 +58,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Intake");
-    builder.addDoubleArrayProperty("Intake speed", this::getIntake, this::setIntake);
+    builder.addDoubleProperty("Intake speed", this::getIntake, this::setIntake);
   }
 
 }
