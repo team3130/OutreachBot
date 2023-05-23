@@ -16,6 +16,8 @@ public class Shooter extends SubsystemBase {
   private final WPI_TalonSRX rightIndexer;
   private double indexerSpeed = 0.4;
   private double flywheelSpeed = 0.8;
+  private double delayTime = 0.2;
+
 
   public Shooter() {
     flywheel = new WPI_TalonSRX(Constants.CAN.SHOOTERFLYWHEEL);
@@ -57,6 +59,13 @@ public class Shooter extends SubsystemBase {
   public double getFlywheelSpeed(){
     return flywheelSpeed;
   }
+  public double getDelayTime(){
+    return delayTime;
+  }
+
+  public void setDelayTime(double delay){
+    delayTime = delay;
+  }
 
   public void stopFlywheel() {
     flywheel.stopMotor();
@@ -76,6 +85,7 @@ public class Shooter extends SubsystemBase {
     builder.setSmartDashboardType("Shooter");
     builder.addDoubleProperty("flywheel speed", this::getFlywheelSpeed, this::setFlywheelSpeed);
     builder.addDoubleProperty("indexer speed", this::getIndexerSpeed, this::setIndexerSpeed);
+    builder.addDoubleProperty("wait time", this::getDelayTime, this::setDelayTime);
   }
 
   @Override
