@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,7 +39,8 @@ public class RobotContainer {
   private final XboxController m_Gamepad = new XboxController(0);
   private final Shooter m_shooter = new Shooter();
 
-  public static Joystick m_Gamepad = new Joystick(0);
+  public static Joystick m_joystick = new Joystick(0);
+  private final XboxController m_gamepad = new XboxController(0);
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -75,6 +77,8 @@ public class RobotContainer {
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new SpoutTake(m_intake));
 
+    new JoystickButton(m_gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
   }
 
   /**
