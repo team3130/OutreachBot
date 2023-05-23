@@ -16,7 +16,7 @@ public class Shooter extends SubsystemBase {
   private final WPI_TalonSRX rightIndexer;
   private double indexerSpeed = 0.4;
   private double flywheelSpeed = 0.8;
-  private double delayTime = 0.2;
+  public double delayTime = 0.2;
 
 
   public Shooter() {
