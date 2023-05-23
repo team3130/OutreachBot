@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -13,6 +14,8 @@ public class Shooter extends SubsystemBase {
   private final WPI_TalonSRX flywheel;
   private final WPI_TalonSRX leftIndexer;
   private final WPI_TalonSRX rightIndexer;
+  private double indexerSpeed = 0.4;
+  private double flywheelSpeed = 0.8;
 
   public Shooter() {
     flywheel = new WPI_TalonSRX(Constants.CAN.SHOOTERFLYWHEEL);
@@ -32,13 +35,27 @@ public class Shooter extends SubsystemBase {
   }
 
   public void spinIndexer() {
-    leftIndexer.set(ControlMode.PercentOutput, 0.4);
-    rightIndexer.set(ControlMode.PercentOutput, 0.4);
+    leftIndexer.set(ControlMode.PercentOutput, indexerSpeed);
+    rightIndexer.set(ControlMode.PercentOutput, indexerSpeed);
   }
 
   public void reverseIndexer() {
-    leftIndexer.set(ControlMode.PercentOutput, -0.4);
-    rightIndexer.set(ControlMode.PercentOutput, -0.4);
+    leftIndexer.set(ControlMode.PercentOutput, -indexerSpeed);
+    rightIndexer.set(ControlMode.PercentOutput, -indexerSpeed);
+  }
+
+  public void setIndexerSpeed(double newSpeed){
+    indexerSpeed = newSpeed;
+  }
+  public double getIndexerSpeed(){
+    return indexerSpeed;
+  }
+
+  public void setFlywheelSpeed(double newSpeed){
+    flywheelSpeed = newSpeed;
+  }
+  public double getFlywheelSpeed(){
+    return flywheelSpeed;
   }
 
   public void stopFlywheel() {
@@ -53,6 +70,12 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    builder.setSmartDashboardType("Shooter");
+    builder.addDoubleProperty("flywheel speed", this::getFlywheelSpeed, this::setFlywheelSpeed);
+    builder.addDoubleProperty("indexer speed", this::getIndexerSpeed, this::setIndexerSpeed);
   }
 
   @Override
