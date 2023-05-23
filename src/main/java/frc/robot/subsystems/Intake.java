@@ -29,11 +29,11 @@ public class Intake extends SubsystemBase {
     m_motor.set(-speed);
   }
 
-  public double getIntake() {
+  public double getSpeed() {
     return speed;
   }
 
-  public void setIntake(double newSpeed) {
+  public void setSpeed(double newSpeed) {
     speed = newSpeed;
   }
 
@@ -58,7 +58,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Intake");
-    builder.addDoubleProperty("Intake speed", this::getIntake, this::setIntake);
+    builder.addDoubleProperty("Intake speed", this::getSpeed, this::setSpeed);
   }
 
 }
