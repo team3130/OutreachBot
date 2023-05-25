@@ -26,6 +26,8 @@ public class Spintake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_intake.updateEnableVoltageCompensation(m_intake.getVoltageCompBoolean());
+    m_intake.updateVoltageCompensationNum(m_intake.getVoltNum());
     m_intake.spinIntake();
   }
 

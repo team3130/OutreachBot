@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,37 +14,58 @@ public class Intake extends SubsystemBase {
   
   private final WPI_TalonSRX m_motor;
   private double speed = 0.5;
+  private double volt = 9.5;
+  private boolean voltComp = true;
 
   public Intake() {
     m_motor = new WPI_TalonSRX(Constants.CAN.Intake_Motor);
     m_motor.setInverted(false);
-    m_motor.configVoltageCompSaturation(9.5);
-    m_motor.enableVoltageCompensation(true);
+    m_motor.configFactoryDefault();
+    m_motor.configVoltageCompSaturation(volt);
+    m_motor.enableVoltageCompensation(voltComp);
   }
 
-  public void spinIntake() {
-    m_motor.set(speed);
+  /** miscellaneous methods */
+  public void spinIntake() { //spin beater bar to intake
+    m_motor.set(ControlMode.PercentOutput, speed);
+  }
+  public void spoutTake() { //spin beater bar to eject out of intake
+    m_motor.set(ControlMode.PercentOutput, -speed);
+  }
+  public void updateEnableVoltageCompensation(boolean bool){ //update if voltage compensation is enabled from shuffleboard
+    m_motor.enableVoltageCompensation(bool);
+  }
+  public void updateVoltageCompensationNum(double vol){ //update the voltage threshold from shuffleboard
+    m_motor.configVoltageCompSaturation(vol);
+  }
+  public void stop() { //stop motor
+    m_motor.set(ControlMode.PercentOutput, 0);
   }
 
-  public void spoutTake() {
-    m_motor.set(-speed);
-  }
-
+  /** getters & setters */
   public double getSpeed() {
     return speed;
   }
-
   public void setSpeed(double newSpeed) {
     speed = newSpeed;
   }
 
-  public void stop() {
-    m_motor.set(0);
+  public boolean getVoltageCompBoolean(){
+    return voltComp;
+  }
+  public void setVoltageCompBoolean(boolean bool){
+    if (voltComp != bool){
+      voltComp = !voltComp;
+    }
   }
 
-  public void toggleVoltageCompensation() {
-    m_motor.enableVoltageCompensation(false);
+  public double getVoltNum(){
+    return volt;
   }
+  public void setVoltNum(double newVolt){
+    volt = newVolt;
+  }
+
 
   @Override
   public void periodic() {
@@ -55,10 +77,12 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  @Override
+  @Override // outputs to shuffleboard in a way that is update-able in real time (many of these can be removed after testing)
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Intake");
     builder.addDoubleProperty("Intake speed", this::getSpeed, this::setSpeed);
+    builder.addDoubleProperty("Voltage compensation double", this::getVoltNum, this::setVoltNum);
+    builder.addBooleanProperty("Voltage compensation boolean", this::getVoltageCompBoolean, this::setVoltageCompBoolean);
   }
 
 }
