@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -23,6 +24,8 @@ public class Chassis extends SubsystemBase {
 
   private final MotorControllerGroup m_right;
   private final MotorControllerGroup m_left;
+  private boolean follow = false;
+  private boolean brake = true;
 
   private final DifferentialDrive m_drive;
   private final CANCoder m_leftAbsoluteEncoder; // the can encoder attached to the shaft
@@ -46,6 +49,7 @@ public class Chassis extends SubsystemBase {
     m_leftFront.configVoltageCompSaturation(Constants.Drivetrain.maxVoltage);
     m_rightBack.configVoltageCompSaturation(Constants.Drivetrain.maxVoltage);
     m_leftBack.configVoltageCompSaturation(Constants.Drivetrain.maxVoltage);
+
     m_rightFront.enableVoltageCompensation(true);
     m_leftFront.enableVoltageCompensation(true);
     m_rightBack.enableVoltageCompensation(true);
@@ -54,8 +58,6 @@ public class Chassis extends SubsystemBase {
     m_rightFront.setInverted(true);
     m_rightBack.setInverted(true);
 
-    configureBreakMode(true);
-
     m_right = new MotorControllerGroup(m_rightFront, m_rightBack);
     m_left = new MotorControllerGroup(m_leftFront, m_leftBack);
 
@@ -63,18 +65,13 @@ public class Chassis extends SubsystemBase {
     m_drive.setDeadband(Constants.Drivetrain.inputDeadband);
     m_drive.setSafetyEnabled(false);
 
-    m_leftBack.follow(m_leftFront); //TODO ??
-    m_rightBack.follow(m_rightFront); //TODO ??
-    circleFixer = (Double[] angle) -> {
-      angle[0] = ((angle[0] % 360) + 360) % 360;
-      angle[0] += ((angle[0] > 180) ? -360 : 0);
-    };
-
-
-
+    configureBreakMode(brake); //should be set to a default value after testing
+    enableFollow(follow); //should be set to a default value after testing
 
   }
-  public void configureBreakMode(boolean brake) {
+
+  /** miscellaneous methods */
+  public void configureBreakMode(boolean brake) { //sets the chassis to brake or coast mode from shuffleboard
     if (brake) {
       m_leftFront.setNeutralMode(NeutralMode.Brake);
       m_rightFront.setNeutralMode(NeutralMode.Brake);
@@ -87,18 +84,48 @@ public class Chassis extends SubsystemBase {
       m_rightBack.setNeutralMode(NeutralMode.Coast);
     }
   }
-  public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
+
+  public void enableFollow(boolean follower) { //enables follower mode from shuffleboard
+    if (follower) {
+      m_leftBack.follow(m_leftFront);
+      m_rightBack.follow(m_rightFront);
+    }
+  }
+
+  public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) { //driving
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
   }
-  private final Consumer<Double[]> circleFixer;
 
-  public void configRampRate() {
+  public void configRampRate() { //configures acceleration (seconds from neutral to full)
     m_rightFront.configOpenloopRamp(Constants.Drivetrain.rampRate);
     m_leftFront.configOpenloopRamp(Constants.Drivetrain.rampRate);
     m_rightBack.configOpenloopRamp(Constants.Drivetrain.rampRate);
     m_leftBack.configOpenloopRamp(Constants.Drivetrain.rampRate);
   }
 
+  public void configEndRampRate() { //configures acceleration for end of driving command (i don't understand this)
+    m_rightFront.configOpenloopRamp(0);
+    m_leftFront.configOpenloopRamp(0);
+    m_rightBack.configOpenloopRamp(0);
+    m_leftBack.configOpenloopRamp(0);
+  }
+
+  /** setters & getters */
+  public boolean getBrake(){
+    return brake;
+  }
+
+  public void setBrake(boolean braked){
+    brake = braked;
+  }
+
+  public boolean getFollower(){
+    return follow;
+  }
+
+  public void setFollow(boolean follower){
+    follow = follower;
+  }
 
   @Override
   public void periodic() {
@@ -109,4 +136,12 @@ public class Chassis extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+  @Override
+  public void initSendable(SendableBuilder builder) { //outputs to shuffleboard, update-able in real time
+    builder.setSmartDashboardType("Chassis");
+
+    builder.addBooleanProperty("brake", this::getBrake, this::setBrake);
+    builder.addBooleanProperty("follower mode", this::getFollower, this::setFollow);
+  }
+
 }
