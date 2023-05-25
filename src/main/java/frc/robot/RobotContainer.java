@@ -30,12 +30,14 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
 
   public static Joystick m_joystick = new Joystick(0);
-  private final XboxController m_gamepad = new XboxController(0);
+  private final XboxController m_Gamepad = new XboxController(0);
 
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  /* Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+      
+   */
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -53,7 +55,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    /* Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
@@ -61,8 +63,10 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    new JoystickButton(m_gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
+     */
+
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
   }
 
   /**
