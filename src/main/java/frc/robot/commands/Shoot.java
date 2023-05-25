@@ -37,7 +37,7 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_timer.hasElapsed(m_shooter.delayTime)) {
+    if (m_timer.hasElapsed(m_shooter.getDelayTime())) {
       m_shooter.spinIndexer();
     }
   }
