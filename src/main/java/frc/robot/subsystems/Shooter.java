@@ -16,7 +16,7 @@ public class Shooter extends SubsystemBase {
   private final WPI_TalonSRX rightIndexer;
   private double indexerSpeed = 0.4;
   private double flywheelSpeed = 0.8;
-  public double delayTime = 0.2;
+  private double delayTime = 0.2;
 
 
   public Shooter() {
@@ -32,20 +32,30 @@ public class Shooter extends SubsystemBase {
     rightIndexer.setInverted(false);
   }
 
-  public void runFlywheel() {
-    flywheel.set(ControlMode.PercentOutput, 0.75);
+  /** miscellaneous methods */
+  public void runFlywheel() {  //run flywheel at a given output
+    flywheel.set(ControlMode.PercentOutput, flywheelSpeed);
   }
 
-  public void spinIndexer() {
+  public void spinIndexer() { //spin indexer to feed flywheel
     leftIndexer.set(ControlMode.PercentOutput, indexerSpeed);
     rightIndexer.set(ControlMode.PercentOutput, indexerSpeed);
   }
 
-  public void reverseIndexer() {
+  public void reverseIndexer() { //spin indexer back towards hopper to clear congestion
     leftIndexer.set(ControlMode.PercentOutput, -indexerSpeed);
     rightIndexer.set(ControlMode.PercentOutput, -indexerSpeed);
   }
+  public void stopFlywheel() { //stop flywheel motor
+    flywheel.stopMotor();
+  }
 
+  public void stopIndexer() { //stop both indexer motors
+    leftIndexer.stopMotor();
+    rightIndexer.stopMotor();
+  }
+
+  /**getters & setters */
   public void setIndexerSpeed(double newSpeed){
     indexerSpeed = newSpeed;
   }
@@ -59,22 +69,14 @@ public class Shooter extends SubsystemBase {
   public double getFlywheelSpeed(){
     return flywheelSpeed;
   }
+
   public double getDelayTime(){
     return delayTime;
   }
-
   public void setDelayTime(double delay){
     delayTime = delay;
   }
 
-  public void stopFlywheel() {
-    flywheel.stopMotor();
-  }
-
-  public void stopIndexer() {
-    leftIndexer.stopMotor();
-    rightIndexer.stopMotor();
-  }
 
   @Override
   public void periodic() {
