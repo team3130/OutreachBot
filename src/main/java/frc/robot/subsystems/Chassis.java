@@ -5,9 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -15,6 +13,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import dcom.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -60,35 +59,26 @@ public class Chassis extends SubsystemBase {
     m_MFR.enableVoltageCompensation(true);
     m_MBL.enableVoltageCompensation(true);
     m_MBR.enableVoltageCompensation(true);
-    
-    m_MFL.setInverted(true);
+
     m_MFR.setInverted(true);
-    m_MBL.setInverted(true);
     m_MBR.setInverted(true);
 
-    m_motorsRight = new MotorControllerGroup(m_MFR, m_MBR);
-    m_motorsLeft = new MotorControllerGroup(m_MFL, m_MBL);
+    m_rightMotors = new MotorControllerGroup(m_MFR, m_MBR);
+    m_leftMotors = new MotorControllerGroup(m_MFL, m_MBL);
 
-    m_drive = new DifferentialDrive(m_motorsLeft, m_motorsRight);
+    m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
     m_drive.setDeadband(Constants.Chassis.kDriveDeadband);
     m_drive.setSafetyEnabled(false);
 
-    //these would only be for auton. 6-wheel doesn't need pidf to drive
-    m_feedforward = new SimpleMotorFeedforward(Constants.Chassis.ChassiskS, Constants.Chassis.ChassiskV, Constants.Chassis.ChassiskA);
-    m_leftPIDController = new PIDController(Constants.Chassis.LChassiskP, Constants.Chassis.LChassiskI, Constants.Chassis.LChassiskD);
-    m_rightPIDConttroller = new PIDController(Constants.Chassis.RChassiskP, Constants.Chassis.RChassiskI, Constants.Chassis.RChassiskD);
-  }
-  
-  public double getMotorVelocity(WPI_TalonFX motor){
-    return (motor.getSelectedSensorVelocity() / Constants.Chassis.encoderResolution
-                * (Constants.Chassis.gearRatio) * (Math.PI * Constants.Chassis.wheelDiameter)) * 10;
+    MotorControllerGroup m_rightMotors = new MotorControllerGroup(m_MFR,m_MBR);
+    MotorControllerGroup m_leftMotors = new MotorControllerGroup(m_MFL,m_MBL);
   }
 
   public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
   }
 
-  public void configureBreakMode(boolean brake) {
+  public void configureBrakeMode(boolean brake) {
     if (brake) {
       m_MFL.setNeutralMode(NeutralMode.Brake);
       m_MFR.setNeutralMode(NeutralMode.Brake);
@@ -100,6 +90,19 @@ public class Chassis extends SubsystemBase {
       m_MBL.setNeutralMode(NeutralMode.Coast);
       m_MBR.setNeutralMode(NeutralMode.Coast);
     }
+  }
+
+  /**
+   * Sets the motor voltage outputs and feeds the drivetrain forward
+   * Used in Ramsete Command constructor, param number 9
+   *
+   * @param leftVolts  voltage on the left side
+   * @param rightVolts voltage on the right side
+   */
+  public void setOutput(double leftVolts, double rightVolts) {
+    m_motorsLeft.setVoltage(leftVolts);
+    m_motorsRight.setVoltage(rightVolts);
+    m_drive.feed();
   }
 
   /**
@@ -143,29 +146,19 @@ public class Chassis extends SubsystemBase {
             * (Constants.Chassis.kChassisGearRatio) * (Math.PI * Constants.Chassis.kWheelDiameter)) * 10;
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
+  /**
+   * Returns the current speed of the robot by averaging the front left and right
+   * motors
+   *
+   * @return Current speed of the robot
+   */
+  public double getSpeed() {
+    return 0.5 * (getSpeedL() + getSpeedR());
   }
 
   private void resetEncoders() {
     m_MFL.setSelectedSensorPosition(0);
     m_MFR.setSelectedSensorPosition(0);
-  }
-
-    /**
-     * Returns the current speed of the robot by averaging the front left and right
-     * motors
-     *
-     * @return Current speed of the robot
-     */
-    public double getSpeed() {
-      return 0.5 * (getSpeedL() + getSpeedR());
   }
 
   /**
@@ -178,10 +171,28 @@ public class Chassis extends SubsystemBase {
    *                           throttle
    */
   public void configRampRate(double maxRampRateSeconds) {
-      m_MFR.configOpenloopRamp(maxRampRateSeconds);
-      m_MFL.configOpenloopRamp(maxRampRateSeconds);
-      m_MBR.configOpenloopRamp(maxRampRateSeconds);
-      m_MBL.configOpenloopRamp(maxRampRateSeconds);
+    m_MFR.configOpenloopRamp(maxRampRateSeconds);
+    m_MFL.configOpenloopRamp(maxRampRateSeconds);
+    m_MBR.configOpenloopRamp(maxRampRateSeconds);
+    m_MBL.configOpenloopRamp(maxRampRateSeconds);
+  }
+
+  /**
+   * Output values to shuffleboard
+   */
+  public void outputToShuffleboard() {
+    SmartDashboard.putNumber("Navx Heading", m_navx.getHeading());
+  }
+}
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
   }
 
   /**
@@ -221,24 +232,3 @@ public class Chassis extends SubsystemBase {
   public PIDController getRightPIDController() {
       return m_rightPIDConttroller;
   }
-
-  /**
-   * Sets the motor voltage outputs and feeds the drivetrain forward
-   * Used in Ramsete Command constructor, param number 9
-   * 
-   * @param leftVolts  voltage on the left side
-   * @param rightVolts voltage on the right side
-   */
-  public void setOutput(double leftVolts, double rightVolts) {
-      m_motorsLeft.setVoltage(leftVolts);
-      m_motorsRight.setVoltage(rightVolts);
-      m_drive.feed();
-  }
-
-  /**
-     * Output values to shuffleboard
-     */
-    public void outputToShuffleboard() {
-      SmartDashboard.putNumber("Navx Heading", m_navx.getHeading());
-  }
-}
