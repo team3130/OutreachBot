@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -186,9 +187,15 @@ public class Chassis extends SubsystemBase {
    * Output values to shuffleboard
    */
   public void outputToShuffleboard() {
-    SmartDashboard.putNumber("Navx Heading", m_navx.getHeading());
+    SmartDashboard.putNumber("Navx Heading", Navx.getHeading());
   }
+  public double getNavxRotation(){ return Navx.getHeading(); }
 
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    builder.setSmartDashboardType("Chassis");
+    builder.addDoubleProperty("Navx rotation", this::getNavxRotation, null);
+  }
 
   @Override
   public void periodic() {
