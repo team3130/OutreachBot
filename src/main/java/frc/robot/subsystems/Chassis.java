@@ -84,7 +84,7 @@ public class Chassis extends SubsystemBase {
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
   }
 
-  public void configureBrakeMode(boolean brake) {
+  public void configureBrakeMode(boolean brake) { /**THIS SHOULD BE USED**/
     if (brake) {
       m_MFL.setNeutralMode(NeutralMode.Brake);
       m_MFR.setNeutralMode(NeutralMode.Brake);
