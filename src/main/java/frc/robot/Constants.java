@@ -85,6 +85,8 @@ public final class Constants {
     public static final int kChassisGearRatio = 0; // TO-DO
     public static final int kWheelDiameter = 0; // TO-DO
 
+    public static double kMaxRampRate = 0.7;
+
     public static final int ChassiskS = 0; // TO-DO
     public static final int ChassiskV = 0; // TO-DO
     public static final int ChassiskA = 0; // TO-DO

@@ -13,7 +13,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import dcom.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -63,15 +63,20 @@ public class Chassis extends SubsystemBase {
     m_MFR.setInverted(true);
     m_MBR.setInverted(true);
 
-    m_rightMotors = new MotorControllerGroup(m_MFR, m_MBR);
-    m_leftMotors = new MotorControllerGroup(m_MFL, m_MBL);
+    m_motorsRight = new MotorControllerGroup(m_MFR, m_MBR);
+    m_motorsLeft = new MotorControllerGroup(m_MFL, m_MBL);
 
-    m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+    m_drive = new DifferentialDrive(m_motorsLeft, m_motorsRight);
     m_drive.setDeadband(Constants.Chassis.kDriveDeadband);
     m_drive.setSafetyEnabled(false);
 
     MotorControllerGroup m_rightMotors = new MotorControllerGroup(m_MFR,m_MBR);
     MotorControllerGroup m_leftMotors = new MotorControllerGroup(m_MFL,m_MBL);
+
+    m_feedforward = new SimpleMotorFeedforward(Constants.Chassis.ChassiskS, Constants.Chassis.ChassiskV, Constants.Chassis.ChassiskA);
+    m_leftPIDController = new PIDController(Constants.Chassis.LChassiskP, Constants.Chassis.LChassiskI, Constants.Chassis.LChassiskD);
+    m_rightPIDConttroller = new PIDController(Constants.Chassis.RChassiskP, Constants.Chassis.RChassiskI, Constants.Chassis.RChassiskD);
+
   }
 
   public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
@@ -183,7 +188,7 @@ public class Chassis extends SubsystemBase {
   public void outputToShuffleboard() {
     SmartDashboard.putNumber("Navx Heading", m_navx.getHeading());
   }
-}
+
 
   @Override
   public void periodic() {
@@ -224,11 +229,8 @@ public class Chassis extends SubsystemBase {
       return m_leftPIDController;
   }
 
-  /**
-   * used in Ramsete Command constructor, param number 8
-   * 
-   * @return right pidcontroller
-   */
   public PIDController getRightPIDController() {
       return m_rightPIDConttroller;
   }
+}
+
