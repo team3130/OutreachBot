@@ -21,6 +21,7 @@ public final class Constants {
   }
 
   public static class OperatorConstants {
+    public static final int hi = 69;
     public static final int kDriverControllerPort = 0;
   }
   public static class Buttons {
