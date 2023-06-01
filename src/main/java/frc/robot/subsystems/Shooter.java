@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,7 +14,7 @@ import frc.robot.Constants;
 public class Shooter extends SubsystemBase {
   private final WPI_TalonSRX flywheel;
   private final WPI_TalonSRX leftIndexer;
-  private final WPI_TalonSRX rightIndexer;
+  private final WPI_VictorSPX rightIndexer;
   private double indexerSpeed = 0.4;
   private double flywheelSpeed = 0.8;
   private double delayTime = 0.2;
@@ -22,7 +23,7 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     flywheel = new WPI_TalonSRX(Constants.CAN.SHOOTERFLYWHEEL);
     leftIndexer = new WPI_TalonSRX(Constants.CAN.LEFTINDEXER);
-    rightIndexer = new WPI_TalonSRX(Constants.CAN.RIGHTINDEXER);
+    rightIndexer = new WPI_VictorSPX(Constants.CAN.RIGHTINDEXER);
 
     flywheel.configFactoryDefault();
     flywheel.setInverted(false);
