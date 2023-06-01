@@ -56,10 +56,13 @@ public final class Constants {
 }
   public static class CAN {
       //All CAN IDs for Bot
-      public static final int MFL = 0; // TO-DO
-      public static final int MFR = 0; // TO-DO
-      public static final int MBL = 0; // TO-DO
-      public static final int MBR = 0; // TO-DO
+      public static final int frontLeftDrive = 2; // TO-DO
+      public static final int frontRightDrive = 3; // TO-DO
+      public static final int backLeftDrive = 4; // TO-DO
+      public static final int backRightDrive = 5; // TO-DO
+
+      public static final int PCM = 0;
+      public static final int PDP = 1;
     }
   public static class Chassis {
     //Constants for Chassis

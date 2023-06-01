@@ -9,16 +9,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.sensors.Navx;
@@ -43,9 +38,9 @@ public class Chassis extends SubsystemBase {
   private final Navx m_navx = Navx.GetInstance();
   
   public Chassis() {
-    m_MFL = new WPI_TalonFX(Constants.CAN.MFL);
-    m_MFR = new WPI_VictorSPX(Constants.CAN.MFR);
-    m_MBL = new WPI_TalonFX(Constants.CAN.MBL);
+    m_MFL = new WPI_TalonFX(Constants.CAN.frontLeftDrive);
+    m_MFR = new WPI_VictorSPX(Constants.CAN.frontRightDrive);
+    m_MBL = new WPI_TalonFX(Constants.CAN.backLeftDrive);
     m_MBR = new WPI_TalonFX(Constants.CAN.MBR);
     
     m_MFL.configFactoryDefault();
