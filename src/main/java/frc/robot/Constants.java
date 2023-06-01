@@ -71,6 +71,14 @@ public final class Constants {
     //Constants for Chassis
     public static class CAN {
       //CAN IDs for Chassis
+      //All CAN IDs for Bot
+      public static final int frontLeftDrive = 2; // TO-DO
+      public static final int frontRightDrive = 3; // TO-DO
+      public static final int backLeftDrive = 4; // TO-DO
+      public static final int backRightDrive = 5; // TO-DO
+
+      public static final int PCM = 0;
+      public static final int PDP = 1;
     }
   public static class Chassis {
     //Constants for Chassis
