@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -25,9 +26,10 @@ import frc.robot.sensors.Navx;
 public class Chassis extends SubsystemBase {
   
   private final WPI_TalonFX m_MFL; //motor-front-left
-  private final WPI_TalonFX m_MFR; 
   private final WPI_TalonFX m_MBL;
   private final WPI_TalonFX m_MBR;
+
+  private final WPI_VictorSPX m_MFR;
 
   private final DifferentialDrive m_drive;
 
@@ -42,7 +44,7 @@ public class Chassis extends SubsystemBase {
   
   public Chassis() {
     m_MFL = new WPI_TalonFX(Constants.CAN.MFL);
-    m_MFR = new WPI_TalonFX(Constants.CAN.MFR);
+    m_MFR = new WPI_VictorSPX(Constants.CAN.MFR);
     m_MBL = new WPI_TalonFX(Constants.CAN.MBL);
     m_MBR = new WPI_TalonFX(Constants.CAN.MBR);
     
@@ -78,13 +80,14 @@ public class Chassis extends SubsystemBase {
     m_leftPIDController = new PIDController(Constants.Chassis.LChassiskP, Constants.Chassis.LChassiskI, Constants.Chassis.LChassiskD);
     m_rightPIDConttroller = new PIDController(Constants.Chassis.RChassiskP, Constants.Chassis.RChassiskI, Constants.Chassis.RChassiskD);
 
+    configureBrakeMode(true);
   }
 
   public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
   }
 
-  public void configureBrakeMode(boolean brake) { /**THIS SHOULD BE USED**/
+  public void configureBrakeMode(boolean brake) {
     if (brake) {
       m_MFL.setNeutralMode(NeutralMode.Brake);
       m_MFR.setNeutralMode(NeutralMode.Brake);
