@@ -13,13 +13,13 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
   
   private final WPI_TalonSRX m_motor;
-  private double speed = 0.5;
+  private double speed = 0.8;
   private double volt = 9.5;
   private boolean voltComp = true;
 
   public Intake() {
     m_motor = new WPI_TalonSRX(Constants.CAN.Intake_Motor);
-    m_motor.setInverted(false);
+    m_motor.setInverted(true);
     m_motor.configFactoryDefault();
     m_motor.configVoltageCompSaturation(volt);
     m_motor.enableVoltageCompensation(voltComp);

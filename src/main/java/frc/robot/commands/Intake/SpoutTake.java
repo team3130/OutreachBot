@@ -28,13 +28,12 @@ public class SpoutTake extends CommandBase {
   public void initialize() {
     m_intake.updateEnableVoltageCompensation(m_intake.getVoltageCompBoolean());
     m_intake.updateVoltageCompensationNum(m_intake.getVoltNum());
-    m_intake.spoutTake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    m_intake.spoutTake();
   }
 
   // Called once the command ends or is interrupted.
