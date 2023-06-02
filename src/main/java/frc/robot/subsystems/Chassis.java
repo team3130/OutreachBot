@@ -36,12 +36,13 @@ public class Chassis extends SubsystemBase {
   private final PIDController m_rightPIDConttroller;
 
   private final Navx m_navx = Navx.GetInstance();
+
   
   public Chassis() {
     m_MFL = new WPI_TalonFX(Constants.CAN.frontLeftDrive);
     m_MFR = new WPI_VictorSPX(Constants.CAN.frontRightDrive);
     m_MBL = new WPI_TalonFX(Constants.CAN.backLeftDrive);
-    m_MBR = new WPI_TalonFX(Constants.CAN.MBR);
+    m_MBR = new WPI_TalonFX(Constants.CAN.backRightDrive);
     
     m_MFL.configFactoryDefault();
     m_MFR.configFactoryDefault();

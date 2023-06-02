@@ -29,8 +29,8 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double moveSpeed = -m_robotContainer.m_driverGamepad.getRawAxis(1);
-    double turnSpeed = m_robotContainer.m_driverGamepad.getRawAxis(4) * .8;
+    double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1);
+    double turnSpeed = RobotContainer.m_driverGamepad.getRawAxis(4) * .8;
     m_chassis.driveArcade(moveSpeed,turnSpeed,true);
   }
 
