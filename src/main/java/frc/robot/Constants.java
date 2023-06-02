@@ -15,9 +15,9 @@ package frc.robot;
 public final class Constants {
 
   public static class CAN {
-    public static final int SHOOTERFLYWHEEL = 1;
-    public static final int LEFTINDEXER = 2;
-    public static final int RIGHTINDEXER = 3;
+    public static final int SHOOTERFLYWHEEL = 6;
+    public static final int LEFTINDEXER = 7;
+    public static final int RIGHTINDEXER = 8;
   }
 
   public static class OperatorConstants {
