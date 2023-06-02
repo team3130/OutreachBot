@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
     leftIndexer.configFactoryDefault();
     leftIndexer.setInverted(false);
     rightIndexer.configFactoryDefault();
-    rightIndexer.setInverted(false);
+    rightIndexer.setInverted(true);
   }
 
   /** miscellaneous methods */
