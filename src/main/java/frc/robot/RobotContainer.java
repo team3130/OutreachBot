@@ -17,7 +17,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Chassis;
 import frc.robot.commands.Intake.Spintake;
 import frc.robot.commands.Intake.SpoutTake;
 import frc.robot.commands.Shoot;
@@ -43,6 +45,8 @@ public class RobotContainer {
   private final XboxController m_Gamepad = new XboxController(0);
   private final Shooter m_shooter = new Shooter();
 
+  private final Chassis m_chassis = new Chassis();
+  // Replace with CommandPS4Controller or CommandJoystick if needed
   public static Joystick m_joystick = new Joystick(0);
   private final XboxController m_Gamepad = new XboxController(0);
 
@@ -57,7 +61,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-
+    m_chassis.setDefaultCommand(new Drive(m_chassis, this));
   }
 
   /**
