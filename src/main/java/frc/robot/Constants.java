@@ -19,15 +19,15 @@ public final class Constants {
     public static double inputDeadband = 0.02;
     public static double rampRate = 0.7; // seconds to full output
     public static double turnSpeed = 0.8;
-    public static double slowingScalar = 0.55;
+    public static double slowingScalar = 0.85;
 
   }
 
   public static class CAN {
-    public static int leftFrontDrivetrain = 0;
-    public static int rightFrontDrivetrain = 1;
-    public static int leftBackDrivetrain = 2;
-    public static int rightBackDrivetrain = 3;
+    public static int leftFrontDrivetrain = 2;
+    public static int rightFrontDrivetrain = 3;
+    public static int leftBackDrivetrain = 4;
+    public static int rightBackDrivetrain = 5;
     public static int drivetrainLeftEncoder = 7;
     public static int drivetrainRightEncoder = 8;
     public static int flywheelShooter = 4;

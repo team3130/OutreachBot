@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -18,7 +19,7 @@ import java.util.function.Consumer;
 
 public class Chassis extends SubsystemBase {
   private final WPI_TalonSRX m_leftFront;
-  private final WPI_TalonSRX m_rightFront;
+  private final WPI_VictorSPX m_rightFront;
   private final WPI_TalonSRX m_leftBack;
   private final WPI_TalonSRX m_rightBack;
 
@@ -28,17 +29,17 @@ public class Chassis extends SubsystemBase {
   private boolean brake = true;
 
   private final DifferentialDrive m_drive;
-  private final CANCoder m_leftAbsoluteEncoder; // the can encoder attached to the shaft
-  private final CANCoder m_rightAbsoluteEncoder;
+  //private final CANCoder m_leftAbsoluteEncoder; // the can encoder attached to the shaft
+  //private final CANCoder m_rightAbsoluteEncoder;
 
   public Chassis() {
     m_leftFront = new WPI_TalonSRX(Constants.CAN.leftFrontDrivetrain);
-    m_rightFront = new WPI_TalonSRX(Constants.CAN.rightFrontDrivetrain);
+    m_rightFront = new WPI_VictorSPX(Constants.CAN.rightFrontDrivetrain);
     m_leftBack = new WPI_TalonSRX(Constants.CAN.leftBackDrivetrain);
     m_rightBack = new WPI_TalonSRX(Constants.CAN.rightBackDrivetrain);
 
-    m_leftAbsoluteEncoder = new CANCoder(Constants.CAN.drivetrainLeftEncoder);
-    m_rightAbsoluteEncoder = new CANCoder(Constants.CAN.drivetrainRightEncoder);
+    //m_leftAbsoluteEncoder = new CANCoder(Constants.CAN.drivetrainLeftEncoder);
+    //m_rightAbsoluteEncoder = new CANCoder(Constants.CAN.drivetrainRightEncoder);
 
     m_rightFront.configFactoryDefault();
     m_leftFront.configFactoryDefault();

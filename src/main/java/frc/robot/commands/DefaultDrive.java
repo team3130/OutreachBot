@@ -41,7 +41,7 @@ public class DefaultDrive extends CommandBase {
     double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1); //joystick's y-axis is inverted
     moveSpeed *= Constants.Drivetrain.slowingScalar;
 
-    double turnSpeed = RobotContainer.m_driverGamepad.getRawAxis(4) * (Constants.Drivetrain.turnSpeed);
+    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * (Constants.Drivetrain.turnSpeed);
 
     m_chassis.driveArcade(moveSpeed, turnSpeed, true);
   }
