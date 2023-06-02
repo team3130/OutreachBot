@@ -20,11 +20,10 @@ import frc.robot.sensors.Navx;
 
 public class Chassis extends SubsystemBase {
   
-  private final WPI_TalonFX m_MFL; //motor-front-left
-  private final WPI_TalonFX m_MBL;
-  private final WPI_TalonFX m_MBR;
-
-  private final WPI_VictorSPX m_MFR;
+  private final WPI_TalonFX m_frontLeftDrive; //motor-front-left
+  private final WPI_TalonFX m_backLeftDrive;
+  private final WPI_TalonFX m_backRightDrive;
+  private final WPI_VictorSPX m_frontRightDrive;
 
   private final DifferentialDrive m_drive;
 
@@ -39,38 +38,37 @@ public class Chassis extends SubsystemBase {
 
   
   public Chassis() {
-    m_MFL = new WPI_TalonFX(Constants.CAN.frontLeftDrive);
-    m_MFR = new WPI_VictorSPX(Constants.CAN.frontRightDrive);
-    m_MBL = new WPI_TalonFX(Constants.CAN.backLeftDrive);
-    m_MBR = new WPI_TalonFX(Constants.CAN.backRightDrive);
+    m_frontLeftDrive = new WPI_TalonFX(Constants.CAN.frontLeftDrive);
+    m_frontRightDrive = new WPI_VictorSPX(Constants.CAN.frontRightDrive);
+    m_backLeftDrive = new WPI_TalonFX(Constants.CAN.backLeftDrive);
+    m_backRightDrive = new WPI_TalonFX(Constants.CAN.backRightDrive);
     
-    m_MFL.configFactoryDefault();
-    m_MFR.configFactoryDefault();
-    m_MBL.configFactoryDefault();
-    m_MBR.configFactoryDefault();
+    m_frontLeftDrive.configFactoryDefault();
+    m_frontRightDrive.configFactoryDefault();
+    m_backLeftDrive.configFactoryDefault();
+    m_backRightDrive.configFactoryDefault();
     
-    m_MFL.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
-    m_MFR.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
-    m_MBL.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
-    m_MBR.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_frontLeftDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_frontRightDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_backLeftDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_backRightDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
       
-    m_MFL.enableVoltageCompensation(true);
-    m_MFR.enableVoltageCompensation(true);
-    m_MBL.enableVoltageCompensation(true);
-    m_MBR.enableVoltageCompensation(true);
+    m_frontLeftDrive.enableVoltageCompensation(true);
+    m_frontRightDrive.enableVoltageCompensation(true);
+    m_backLeftDrive.enableVoltageCompensation(true);
+    m_backRightDrive.enableVoltageCompensation(true);
 
-    m_MFR.setInverted(true);
-    m_MBR.setInverted(true);
+    m_frontRightDrive.setInverted(true);
+    m_backRightDrive.setInverted(true);
+    m_backLeftDrive.setInverted(false);
+    m_frontLeftDrive.setInverted(false);
 
-    m_motorsRight = new MotorControllerGroup(m_MFR, m_MBR);
-    m_motorsLeft = new MotorControllerGroup(m_MFL, m_MBL);
+    m_motorsRight = new MotorControllerGroup(m_frontRightDrive, m_backRightDrive);
+    m_motorsLeft = new MotorControllerGroup(m_frontLeftDrive, m_backLeftDrive);
 
     m_drive = new DifferentialDrive(m_motorsLeft, m_motorsRight);
     m_drive.setDeadband(Constants.Chassis.kDriveDeadband);
     m_drive.setSafetyEnabled(false);
-
-    MotorControllerGroup m_rightMotors = new MotorControllerGroup(m_MFR,m_MBR);
-    MotorControllerGroup m_leftMotors = new MotorControllerGroup(m_MFL,m_MBL);
 
     m_feedforward = new SimpleMotorFeedforward(Constants.Chassis.ChassiskS, Constants.Chassis.ChassiskV, Constants.Chassis.ChassiskA);
     m_leftPIDController = new PIDController(Constants.Chassis.LChassiskP, Constants.Chassis.LChassiskI, Constants.Chassis.LChassiskD);
@@ -85,15 +83,15 @@ public class Chassis extends SubsystemBase {
 
   public void configureBrakeMode(boolean brake) {
     if (brake) {
-      m_MFL.setNeutralMode(NeutralMode.Brake);
-      m_MFR.setNeutralMode(NeutralMode.Brake);
-      m_MBL.setNeutralMode(NeutralMode.Brake);
-      m_MBR.setNeutralMode(NeutralMode.Brake);
+      m_frontLeftDrive.setNeutralMode(NeutralMode.Brake);
+      m_frontRightDrive.setNeutralMode(NeutralMode.Brake);
+      m_backLeftDrive.setNeutralMode(NeutralMode.Brake);
+      m_backRightDrive.setNeutralMode(NeutralMode.Brake);
     } else {
-      m_MFL.setNeutralMode(NeutralMode.Coast);
-      m_MFR.setNeutralMode(NeutralMode.Coast);
-      m_MBL.setNeutralMode(NeutralMode.Coast);
-      m_MBR.setNeutralMode(NeutralMode.Coast);
+      m_frontLeftDrive.setNeutralMode(NeutralMode.Coast);
+      m_frontRightDrive.setNeutralMode(NeutralMode.Coast);
+      m_backLeftDrive.setNeutralMode(NeutralMode.Coast);
+      m_backRightDrive.setNeutralMode(NeutralMode.Coast);
     }
   }
 
@@ -116,7 +114,7 @@ public class Chassis extends SubsystemBase {
    * @return The absolute distance of the left side in meters
    */
   private double getDistanceL() {
-    return m_MFL.getSelectedSensorPosition() / Constants.Chassis.kEncoderResolution
+    return m_frontLeftDrive.getSelectedSensorPosition() / Constants.Chassis.kEncoderResolution
             * (Constants.Chassis.kChassisGearRatio) * ((Constants.Chassis.kWheelDiameter) * Math.PI);
   }
 
@@ -126,7 +124,7 @@ public class Chassis extends SubsystemBase {
    * @return The absolute distance of the right side in meters
    */
   private double getDistanceR() {
-    return m_MFR.getSelectedSensorPosition() / Constants.Chassis.kEncoderResolution
+    return m_frontRightDrive.getSelectedSensorPosition() / Constants.Chassis.kEncoderResolution
             * (Constants.Chassis.kChassisGearRatio) * ((Constants.Chassis.kWheelDiameter) * Math.PI);
   }
 
@@ -137,7 +135,7 @@ public class Chassis extends SubsystemBase {
    * @return Current speed of the front left motor (meters per second)
    */
   public double getSpeedL() {
-    return (m_MFL.getSelectedSensorVelocity() / Constants.Chassis.kEncoderResolution
+    return (m_frontLeftDrive.getSelectedSensorVelocity() / Constants.Chassis.kEncoderResolution
             * (Constants.Chassis.kChassisGearRatio) * (Math.PI * Constants.Chassis.kWheelDiameter)) * 10;
   }
 
@@ -147,7 +145,7 @@ public class Chassis extends SubsystemBase {
    * @return Current speed of the front right motor (meters per second)
    */
   public double getSpeedR() {
-    return (m_MFR.getSelectedSensorVelocity() / Constants.Chassis.kEncoderResolution
+    return (m_frontRightDrive.getSelectedSensorVelocity() / Constants.Chassis.kEncoderResolution
             * (Constants.Chassis.kChassisGearRatio) * (Math.PI * Constants.Chassis.kWheelDiameter)) * 10;
   }
 
@@ -162,8 +160,8 @@ public class Chassis extends SubsystemBase {
   }
 
   private void resetEncoders() {
-    m_MFL.setSelectedSensorPosition(0);
-    m_MFR.setSelectedSensorPosition(0);
+    m_frontLeftDrive.setSelectedSensorPosition(0);
+    m_frontRightDrive.setSelectedSensorPosition(0);
   }
 
   /**
@@ -176,10 +174,11 @@ public class Chassis extends SubsystemBase {
    *                           throttle
    */
   public void configRampRate(double maxRampRateSeconds) {
-    m_MFR.configOpenloopRamp(maxRampRateSeconds);
-    m_MFL.configOpenloopRamp(maxRampRateSeconds);
-    m_MBR.configOpenloopRamp(maxRampRateSeconds);
-    m_MBL.configOpenloopRamp(maxRampRateSeconds);
+    m_frontRightDrive.configOpenloopRamp(maxRampRateSeconds);
+    m_frontLeftDrive.configOpenloopRamp(maxRampRateSeconds);
+    m_backRightDrive.configOpenloopRamp(maxRampRateSeconds);
+    m_backLeftDrive.configOpenloopRamp(maxRampRateSeconds);
+
   }
 
   /**
