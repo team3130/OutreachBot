@@ -21,7 +21,6 @@ public class Drive extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
-  //test lolsies
 
   // Called when the command is initially scheduled.
   @Override
@@ -31,7 +30,7 @@ public class Drive extends CommandBase {
   @Override
   public void execute() {
     double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1);
-    double turnSpeed = RobotContainer.m_driverGamepad.getRawAxis(4) * .8;
+    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * .8;
     m_chassis.driveArcade(moveSpeed,turnSpeed,true);
   }
 
