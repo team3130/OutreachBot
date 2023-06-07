@@ -29,6 +29,10 @@ import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.*;
+import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -101,8 +105,8 @@ public class RobotContainer {
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
+    new POVButton(m_Gamepad, Constants.Buttons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
+    new POVButton(m_Gamepad, Constants.Buttons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
 
   }
 
