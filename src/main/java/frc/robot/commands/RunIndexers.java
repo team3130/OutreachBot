@@ -4,22 +4,20 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
 /** An example command that uses an example subsystem. */
-public class Unshoot extends CommandBase {
+public class RunIndexers extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Shooter m_shooter;
-  private Timer m_timer;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param shooter The subsystem used by this command.
    */
-  public Unshoot(Shooter shooter) {
+  public RunIndexers(Shooter shooter) {
     m_shooter = shooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
@@ -33,16 +31,13 @@ public class Unshoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.reverseFlywheel();
-    m_shooter.reverseIndexer();
-
+    m_shooter.spinIndexer();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_shooter.stopIndexer();
-    m_shooter.stopFlywheel();
   }
 
   // Returns true when the command should end.

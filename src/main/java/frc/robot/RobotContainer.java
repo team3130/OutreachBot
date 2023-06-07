@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.*;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
@@ -70,7 +71,8 @@ public class RobotContainer {
    * predicate, or via the named factories in {@link
    * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
    * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * PS4} controllers or {@link edu.wpi.first.wpilibj2.co
+   * mmand.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
@@ -85,6 +87,8 @@ public class RobotContainer {
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
      */
 
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A)
+            .whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new SpoutTake(m_intake));
 
@@ -94,10 +98,14 @@ public class RobotContainer {
 
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new RunFlywheel(m_shooter));
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_Y).whileTrue(new RunIndexers(m_shooter));
+
   }
 
   /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * Use this to pass the autonomous
+   * command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */

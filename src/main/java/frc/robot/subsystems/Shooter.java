@@ -16,8 +16,8 @@ public class Shooter extends SubsystemBase {
   private final WPI_TalonSRX leftIndexer;
   private final WPI_VictorSPX rightIndexer;
   private double indexerSpeed = 0.4;
-  private double flywheelSpeed = 0.8;
-  private double delayTime = 0.2;
+  private double flywheelSpeed = 0.9;
+  private double delayTime = 0.15;
 
 
   public Shooter() {
@@ -26,16 +26,19 @@ public class Shooter extends SubsystemBase {
     rightIndexer = new WPI_VictorSPX(Constants.CAN.RIGHTINDEXER);
 
     flywheel.configFactoryDefault();
-    flywheel.setInverted(false);
+    flywheel.setInverted(true);
     leftIndexer.configFactoryDefault();
     leftIndexer.setInverted(false);
     rightIndexer.configFactoryDefault();
-    rightIndexer.setInverted(true);
+    rightIndexer.setInverted(false);
   }
 
   /** miscellaneous methods */
   public void runFlywheel() {  //run flywheel at a given output
     flywheel.set(ControlMode.PercentOutput, flywheelSpeed);
+  }
+  public void reverseFlywheel() {  //run flywheel at a given output in reverse to clear it
+    flywheel.set(ControlMode.PercentOutput, -flywheelSpeed);
   }
 
   public void spinIndexer() { //spin indexer to feed flywheel
