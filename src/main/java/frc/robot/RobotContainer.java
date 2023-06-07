@@ -56,8 +56,8 @@ public class RobotContainer {
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
      */
 
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_LBUMPER).whileTrue(new Spintake(m_intake));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_RBUMPER).whileTrue(new SpoutTake(m_intake));
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new Spintake(m_intake));
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new SpoutTake(m_intake));
 
   }
 
