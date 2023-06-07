@@ -45,6 +45,7 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   private final XboxController m_Gamepad = new XboxController(0);
   private final Shooter m_shooter = new Shooter();
+  private final Chassis m_chassis = new Chassis();
 
   private final Chassis m_chassis = new Chassis();
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -96,6 +97,7 @@ public class RobotContainer {
     new JoystickButton(m_gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
      */
 
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new RunFlywheel(m_shooter));
