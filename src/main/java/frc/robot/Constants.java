@@ -13,7 +13,22 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public static class CAN {
+    public static final int SHOOTERFLYWHEEL = 6;
+    public static final int LEFTINDEXER = 7;
+    public static final int RIGHTINDEXER = 8;
+    public static final int frontLeftDrive = 2; // TO-DO
+    public static final int frontRightDrive = 3; // TO-DO
+    public static final int backLeftDrive = 4; // TO-DO
+    public static final int backRightDrive = 5; // TO-DO
+
+    public static final int PCM = 0;
+    public static final int PDP = 1;
+  }
+
   public static class OperatorConstants {
+    public static final int hi = 69;
     public static final int kDriverControllerPort = 0;
   }
   public static class Buttons {
@@ -54,6 +69,7 @@ public final class Constants {
   public static final int LST_AXS_RJOYSTICKX = 4;
   public static final int LST_AXS_RJOYSTICKY = 5;
 }
+
   public static class CAN {
     public static final int Intake_Motor = 9; // TO-DO
 
@@ -61,13 +77,81 @@ public final class Constants {
   }
   public static class Chassis {
     //Constants for Chassis
+    public static final int maxVoltage = 0; // TODO
+    //max voltage for chassis motors
+    public static final int encoderResolution = 0; // TODO
+    public static final int gearRatio = 0; // TODO
+    public static final int wheelDiameter = 0; // TODO
+
+    public static final int kDriveDeadband = 0; // TODO
+
+    public static final int kEncoderResolution = 0; // TODO
+    public static final int kChassisGearRatio = 0; // TODO
+    public static final int kWheelDiameter = 0; // TODO
+
+    public static double kMaxRampRate = 0.7;
+
+    public static final int ChassiskS = 0; // TODO
+    public static final int ChassiskV = 0; // TODO
+    public static final int ChassiskA = 0; // TODO
+
+    public static final int LChassiskP = 0; // TODO
+    public static final int LChassiskI = 0; // TODO
+    public static final int LChassiskD = 0; // TODO
+    public static final int RChassiskP = 0; // TODO
+    public static final int RChassiskI = 0; // TODO
+    public static final int RChassiskD = 0; // TODO
+
+    // Navx
+
+    public static final boolean kNavxReversed = false; // TODO
+
+    public static class CAN {
+      //CAN IDs for Chassis
+      //All CAN IDs for Bot
+      public static final int frontLeftDrive = 2; // TO-DO
+      public static final int frontRightDrive = 3; // TO-DO
+      public static final int backLeftDrive = 4; // TO-DO
+      public static final int backRightDrive = 5; // TO-DO
+
+  public static class Chassis {
+    //Constants for Chassis
+    public static final int maxVoltage = 0; // TODO
+    //max voltage for chassis motors
+    public static final int encoderResolution = 0; // TODO
+    public static final int gearRatio = 0; // TODO
+    public static final int wheelDiameter = 0; // TODO
+
+    public static final int kDriveDeadband = 0; // TODO
+
+    public static final int kEncoderResolution = 0; // TODO
+    public static final int kChassisGearRatio = 0; // TODO
+    public static final int kWheelDiameter = 0; // TODO
+
+    public static double kMaxRampRate = 0.7;
+
+    public static final int ChassiskS = 0; // TODO
+    public static final int ChassiskV = 0; // TODO
+    public static final int ChassiskA = 0; // TODO
+
+    public static final int LChassiskP = 0; // TODO
+    public static final int LChassiskI = 0; // TODO
+    public static final int LChassiskD = 0; // TODO
+    public static final int RChassiskP = 0; // TODO
+    public static final int RChassiskI = 0; // TODO
+    public static final int RChassiskD = 0; // TODO
+
+    // Navx
+
+    public static final boolean kNavxReversed = false; // TODO
+
   }
   public static class Shooter {
     //Constants for Shooter
   }
   public static class Intake {
-
-
+    //Constants for Intake
   }
+  
   
 }
