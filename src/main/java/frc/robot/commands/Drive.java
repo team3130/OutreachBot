@@ -21,7 +21,6 @@ public class Drive extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
-  //test lolsies
 
   // Called when the command is initially scheduled.
   @Override
