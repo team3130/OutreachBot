@@ -18,6 +18,13 @@ public final class Constants {
     public static final int SHOOTERFLYWHEEL = 6;
     public static final int LEFTINDEXER = 7;
     public static final int RIGHTINDEXER = 8;
+    public static final int frontLeftDrive = 2; // TO-DO
+    public static final int frontRightDrive = 3; // TO-DO
+    public static final int backLeftDrive = 4; // TO-DO
+    public static final int backRightDrive = 5; // TO-DO
+
+    public static final int PCM = 0;
+    public static final int PDP = 1;
   }
 
   public static class OperatorConstants {
@@ -62,16 +69,7 @@ public final class Constants {
   public static final int LST_AXS_RJOYSTICKX = 4;
   public static final int LST_AXS_RJOYSTICKY = 5;
 }
-  public static class CAN {
-      //All CAN IDs for Bot
-      public static final int frontLeftDrive = 2; // TO-DO
-      public static final int frontRightDrive = 3; // TO-DO
-      public static final int backLeftDrive = 4; // TO-DO
-      public static final int backRightDrive = 5; // TO-DO
 
-      public static final int PCM = 0;
-      public static final int PDP = 1;
-    }
   public static class Chassis {
     //Constants for Chassis
     public static final int maxVoltage = 0; // TODO

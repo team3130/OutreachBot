@@ -31,8 +31,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Shooter m_shooter = new Shooter();
+  private final Chassis m_chassis = new Chassis();
 
-  public static Joystick m_joystick = new Joystick(0);
   private final XboxController m_Gamepad = new XboxController(0);
 
 
@@ -74,8 +74,7 @@ public class RobotContainer {
 
      */
 
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A)
-            .whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new RunFlywheel(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_Y).whileTrue(new RunIndexers(m_shooter));
