@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -59,10 +61,6 @@ public class RobotContainer {
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
   private final XboxController m_Gamepad = new XboxController(0);
-  private final Shooter m_shooter = new Shooter();
-  private final Chassis m_chassis = new Chassis();
-
-  private final XboxController m_Gamepad = new XboxController(0);
 
 
   /* Replace with CommandPS4Controller or CommandJoystick if needed
@@ -86,6 +84,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     m_chassis.setDefaultCommand(new Drive(m_chassis, this));
+
+    vomitShuffleBoardData();
   }
 
   /**
@@ -99,41 +99,33 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
     /* Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand()); */
 
-     */
 
+  /** Shooter **/
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_Y).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
     new POVButton(m_Gamepad, Constants.Buttons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
     new POVButton(m_Gamepad, Constants.Buttons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
 
-
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
-     */
-
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_Y).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A)
-            .whileTrue(new Shoot(m_shooter));
+  /** Intake **/
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new SpoutTake(m_intake));
 
-    new JoystickButton(m_gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
-     */
 
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
-    new POVButton(m_Gamepad, Constants.Buttons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
-    new POVButton(m_Gamepad, Constants.Buttons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
+  }
 
+  public void vomitShuffleBoardData() {
+      ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
+      tab.add(m_chassis);
+      tab.add(m_intake);
+      tab.add(m_shooter);
   }
 
   /**
