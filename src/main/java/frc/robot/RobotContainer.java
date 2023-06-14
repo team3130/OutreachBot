@@ -122,10 +122,12 @@ public class RobotContainer {
   }
 
   public void vomitShuffleBoardData() {
-      ShuffleboardTab tab = Shuffleboard.getTab("Subsystems");
-      tab.add(m_chassis);
-      tab.add(m_intake);
-      tab.add(m_shooter);
+      ShuffleboardTab chassis = Shuffleboard.getTab("Chassis");
+      chassis.add(m_chassis);
+      ShuffleboardTab intake = Shuffleboard.getTab("Intake");
+      intake.add(m_intake);
+      ShuffleboardTab shooter = Shuffleboard.getTab("Shooter");
+      shooter.add(m_shooter);
   }
 
   /**

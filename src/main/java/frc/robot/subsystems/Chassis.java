@@ -191,7 +191,6 @@ public class Chassis extends SubsystemBase {
 
   @Override
   public void initSendable(SendableBuilder builder) {
-    builder.setSmartDashboardType("Chassis");
     builder.addDoubleProperty("Navx rotation", this::getNavxRotation, null);
   }
 
