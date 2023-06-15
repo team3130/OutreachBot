@@ -13,7 +13,7 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
   
   private final WPI_TalonSRX m_motor;
-  private double speed = 0.8;
+  private double speed = 0.9;
   private double volt = 9.5;
   private boolean voltComp = true;
 

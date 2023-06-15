@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.chassis;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Chassis;
@@ -30,7 +30,7 @@ public class Drive extends CommandBase {
   @Override
   public void execute() {
     double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1);
-    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * .8;
+    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * .65;
     m_chassis.driveArcade(moveSpeed,turnSpeed,true);
   }
 
