@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.sensors.Navx;
 
+import java.util.function.Consumer;
+
 public class Chassis extends SubsystemBase {
   
   private final WPI_TalonFX m_frontLeftDrive; //motor-front-left
@@ -33,6 +35,14 @@ public class Chassis extends SubsystemBase {
   private final SimpleMotorFeedforward m_feedforward;
   private final PIDController m_leftPIDController;
   private final PIDController m_rightPIDConttroller;
+  private double angle = 0;
+  private double chassisSpinP = 0.02;
+  private double chassisSpinI = 0.09;
+  private double chassisSpinD = 0.0025;
+  private final Consumer<Double[]> circleFixer;
+  private final PIDController m_spinnyPID;
+
+
 
   private final Navx m_navx = Navx.GetInstance();
 
@@ -74,7 +84,14 @@ public class Chassis extends SubsystemBase {
     m_leftPIDController = new PIDController(Constants.Chassis.LChassiskP, Constants.Chassis.LChassiskI, Constants.Chassis.LChassiskD);
     m_rightPIDConttroller = new PIDController(Constants.Chassis.RChassiskP, Constants.Chassis.RChassiskI, Constants.Chassis.RChassiskD);
 
+    m_spinnyPID = new PIDController(chassisSpinP, chassisSpinI, chassisSpinD);
+
     configureBrakeMode(true);
+
+    circleFixer = (Double[] angle) -> {
+      angle[0] = ((angle[0] % 360) + 360) % 360;
+      angle[0] += ((angle[0] > 180) ? -360 : 0);
+    };
   }
 
   public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
@@ -107,6 +124,30 @@ public class Chassis extends SubsystemBase {
     m_motorsRight.setVoltage(rightVolts);
     m_drive.feed();
   }
+  public void resetPIDLoop() {
+    m_spinnyPID.reset();
+    tuneTolerance();
+    m_spinnyPID.enableContinuousInput(-180, 180);
+  }
+  public void tuneTolerance() {
+    m_spinnyPID.setTolerance(3.5, 0.02);
+    m_spinnyPID.setIntegratorRange(-0.1, 0.1);
+  }
+  public void spinOutput() {
+    driveArcade(0, -m_spinnyPID.calculate(getSpinnyAngle()), false);
+  }
+  public double getSpinnyAngle() {
+    if (Navx.getNavxPresent()) {
+      // normalize to positive 360
+      double angle = ((Navx.getAngle() % 360) + 360) % 360;
+      return (angle + ((angle > 180) ? -360 : 0));
+    } else {
+      return 0;
+    }
+  }
+  public void updatePIDValues() {
+    m_spinnyPID.setPID(getSpinnyP(), getSpinnyI(), getSpinnyD());
+  }
 
   /**
    * Gets absolute distance traveled by the left side of the robot in high gear
@@ -126,6 +167,30 @@ public class Chassis extends SubsystemBase {
   private double getDistanceR() {
     return m_frontRightDrive.getSelectedSensorPosition() / Constants.Chassis.kEncoderResolution
             * (Constants.Chassis.kChassisGearRatio) * ((Constants.Chassis.kWheelDiameter) * Math.PI);
+  }
+  public double getGoalAngle(){
+    return angle;
+  }
+  public void setGoalAngle(double goal){
+    angle = goal;
+  }
+  public double getSpinnyP(){
+    return chassisSpinP;
+  }
+  public void setSpinnyP(double goal){
+    chassisSpinP = goal;
+  }
+  public double getSpinnyI(){
+    return chassisSpinI;
+  }
+  public void setSpinnyI(double goal){
+    chassisSpinI = goal;
+  }
+  public double getSpinnyD(){
+    return chassisSpinD;
+  }
+  public void setSpinnyD(double goal){
+    chassisSpinD = goal;
   }
 
 
@@ -192,6 +257,15 @@ public class Chassis extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.addDoubleProperty("Navx rotation", this::getNavxRotation, null);
+    builder.addDoubleProperty("Goal Rotation", this::getGoalAngle, this::setGoalAngle);
+    builder.addDoubleProperty("Spinny P", this::getSpinnyP, this::setSpinnyP);
+    builder.addDoubleProperty("Spinny I", this::getSpinnyI, this::setSpinnyI);
+    builder.addDoubleProperty("Spinny D", this::getSpinnyD, this::setSpinnyD);
+  }
+  public void setSpinnySetPoint(double setpoint) {
+    Double[] angle = new Double[] {setpoint};
+    circleFixer.accept(angle);
+    m_spinnyPID.setSetpoint(angle[0]);
   }
 
   @Override
