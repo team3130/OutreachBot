@@ -36,9 +36,9 @@ public class Chassis extends SubsystemBase {
   private final PIDController m_leftPIDController;
   private final PIDController m_rightPIDConttroller;
   private double angle = 0;
-  private double chassisSpinP = 0.02;
-  private double chassisSpinI = 0.09;
-  private double chassisSpinD = 0.0025;
+  private double chassisSpinP = 0.0099;
+  private double chassisSpinI = 0.000001;
+  private double chassisSpinD = 0.0015;
   private final Consumer<Double[]> circleFixer;
   private final PIDController m_spinnyPID;
 
@@ -53,7 +53,7 @@ public class Chassis extends SubsystemBase {
     m_backLeftDrive = new WPI_TalonFX(Constants.CAN.backLeftDrive);
     m_backRightDrive = new WPI_TalonFX(Constants.CAN.backRightDrive);
 
-    
+
     m_frontLeftDrive.configFactoryDefault();
     m_frontRightDrive.configFactoryDefault();
     m_backLeftDrive.configFactoryDefault();
