@@ -14,6 +14,10 @@ public class Drive extends CommandBase {
   private final Chassis m_chassis;
   private final RobotContainer m_robotContainer;
 
+  /**
+   * Creates a new Command.
+   * @param subsystem The subsystem used by this command.
+   */
   public Drive(Chassis subsystem, RobotContainer container) {
     m_chassis = subsystem;
     m_robotContainer = container;
@@ -22,21 +26,21 @@ public class Drive extends CommandBase {
     addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
+  /** ALL THE FOLLOWING ARE BUILT-IN METHODS BASED ON WHEN THE COMMAND IS RUN**/
   @Override
-  public void initialize() {m_chassis.configRampRate(Constants.Chassis.kMaxRampRate);}
+  public void initialize() {  //called once when the command is scheduled
+    m_chassis.configRampRate(Constants.Chassis.kMaxRampRate);}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1);
-    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * .65;
-    m_chassis.driveArcade(moveSpeed,turnSpeed,true);
+  public void execute() {   //called continuously/repeatedly when the command is scheduled
+    double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1); //joystick axis value (inverted)
+    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * .65; //joystick axis value (inverted and scaled down)
+    m_chassis.driveArcade(moveSpeed,turnSpeed,true); //method to drive
   }
 
-  // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {m_chassis.configRampRate(0);}
+  public void end(boolean interrupted) {   //called once the command ends or is interrupted
+    m_chassis.configRampRate(0);} //disables ramping
 
   // Returns true when the command should end.
   @Override

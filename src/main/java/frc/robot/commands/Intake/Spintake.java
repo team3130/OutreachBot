@@ -14,37 +14,34 @@ public class Spintake extends CommandBase {
   private final Intake m_intake;
 
   /**
-   * Creates a new ExampleCommand.
-   *
-   * @param intake The subsystem used by this command.
+   * Creates a new Command.
+   * @param subsystem The subsystem used by this command.
    */
-  public Spintake(Intake intake) {
-    m_intake = intake;
-    addRequirements(intake);
+  public Spintake(Intake subsystem) {
+    m_intake = subsystem;
+    addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
+  /** ALL THE FOLLOWING ARE BUILT-IN METHODS BASED ON WHEN THE COMMAND IS RUN**/
   @Override
-  public void initialize() {
+  public void initialize() {  // called once when the command is scheduled
     m_intake.updateEnableVoltageCompensation(m_intake.getVoltageCompBoolean());
     m_intake.updateVoltageCompensationNum(m_intake.getVoltNum());
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
+  @Override  //called continuously/repeatedly when the command is scheduled
   public void execute() {
     m_intake.spinIntake();
   }
 
-  // Called once the command ends or is interrupted.
-  @Override
+  @Override //called once the command ends or is interrupted
   public void end(boolean interrupted) {
     m_intake.stop();
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
+  public boolean isFinished() { //returns true when the command should end
     return false;
   }
 }

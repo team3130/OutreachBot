@@ -12,77 +12,85 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   
-  private final WPI_TalonSRX m_motor;
-  private double speed = 0.9;
-  private double volt = 9.5;
-  private boolean voltComp = true;
+  private final WPI_TalonSRX m_intake; // motor attached to the beater bar to intake balls
+  private double speed = 0.9; //default 90% output for the beater bar
+  private double volt = 9.5; //voltage compensation max
+  private boolean voltComp = true; //voltage compensation on
 
   public Intake() {
-    m_motor = new WPI_TalonSRX(Constants.CAN.Intake_Motor);
-    m_motor.setInverted(true);
-    m_motor.configFactoryDefault();
-    m_motor.configVoltageCompSaturation(volt);
-    m_motor.enableVoltageCompensation(voltComp);
+    //instantiate motor
+    m_intake = new WPI_TalonSRX(Constants.CAN.Intake_Motor);
+
+    //set whether its inverted / its direction
+    m_intake.setInverted(true);
+
+    //good practice to set to default settings
+    m_intake.configFactoryDefault();
+
+    //set voltage compensation to a number and turn it on
+    m_intake.configVoltageCompSaturation(volt);
+    m_intake.enableVoltageCompensation(voltComp);
   }
 
-  /** miscellaneous methods */
+  /** GENERAL METHODS */
   public void spinIntake() { //spin beater bar to intake
-    m_motor.set(ControlMode.PercentOutput, speed);
+    m_intake.set(ControlMode.PercentOutput, speed);
   }
-  public void spoutTake() { //spin beater bar to eject out of intake
-    m_motor.set(ControlMode.PercentOutput, -speed);
+  public void spoutTake() { //spin beater bar backwards to eject out of intake
+    m_intake.set(ControlMode.PercentOutput, -speed); //negative percent output spins backward
   }
   public void updateEnableVoltageCompensation(boolean bool){ //update if voltage compensation is enabled from shuffleboard
-    m_motor.enableVoltageCompensation(bool);
+    m_intake.enableVoltageCompensation(bool);
   }
   public void updateVoltageCompensationNum(double vol){ //update the voltage threshold from shuffleboard
-    m_motor.configVoltageCompSaturation(vol);
+    m_intake.configVoltageCompSaturation(vol);
   }
   public void stop() { //stop motor
-    m_motor.set(ControlMode.PercentOutput, 0);
+    m_intake.set(ControlMode.PercentOutput, 0);
   }
 
-  /** getters & setters */
-  public double getSpeed() {
+  /** GETTERS AND SETTERS */
+  public double getSpeed() { //gets or return the variable speed
     return speed;
   }
-  public void setSpeed(double newSpeed) {
+  public void setSpeed(double newSpeed) { //sets or updates the variable speed to the value newSpeed
     speed = newSpeed;
   }
 
-  public boolean getVoltageCompBoolean(){
+  public boolean getVoltageCompBoolean(){ //gets or return the variable voltComp
     return voltComp;
   }
-  public void setVoltageCompBoolean(boolean bool){
+  public void setVoltageCompBoolean(boolean bool){ //sets or updates the variable voltComp to the value bool
     if (voltComp != bool){
       voltComp = !voltComp;
     }
   }
 
-  public double getVoltNum(){
+  public double getVoltNum(){ //gets or return the variable voltComp
     return volt;
   }
-  public void setVoltNum(double newVolt){
+  public void setVoltNum(double newVolt){ //sets or updates the variable volt to the value newVolt
     volt = newVolt;
   }
 
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // This built-in method will be called once per scheduler run
   }
 
   @Override
   public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
+    // This built-in method will be called once per scheduler run during simulation
   }
 
-  @Override // outputs to shuffleboard in a way that is update-able in real time (many of these can be removed after testing)
-  public void initSendable(SendableBuilder builder) {
+  @Override
+  public void initSendable(SendableBuilder builder) { // outputs to shuffleboard in a way that can be update-able in real time (many of these can be removed after testing)
     builder.setSmartDashboardType("Intake");
     builder.addDoubleProperty("Intake speed", this::getSpeed, this::setSpeed);
     builder.addDoubleProperty("Voltage compensation double", this::getVoltNum, this::setVoltNum);
     builder.addBooleanProperty("Voltage compensation boolean", this::getVoltageCompBoolean, this::setVoltageCompBoolean);
+    //builder.addVariableTypeProperty("name to display", this:getter, if you want it to be editable-> this::setter else -> null);
   }
 
 }
