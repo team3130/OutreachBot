@@ -33,8 +33,8 @@ public class Drive extends CommandBase {
 
   @Override
   public void execute() {   //called continuously/repeatedly when the command is scheduled
-    double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1); //joystick axis value (inverted)
-    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * .65; //joystick axis value (inverted and scaled down)
+    double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1) * m_chassis.getMoveSpeedValue(RobotContainer.m_driverGamepad.getRawAxis(3)); //joystick up axis value (inverted) * speed scalar
+    double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(2) * m_chassis.getTurnSpeedValue(RobotContainer.m_driverGamepad.getRawAxis(3)); //joystick rotate value (inverted and scaled down) * speed scalar
     m_chassis.driveArcade(moveSpeed,turnSpeed,true); //method to drive
   }
 

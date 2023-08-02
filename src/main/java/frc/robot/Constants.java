@@ -37,10 +37,10 @@ public final class Constants {
     /**
  * Gamepad Button List
  */
-  public static final int LST_BTN_A = 1;
-  public static final int LST_BTN_B = 2;
-  public static final int LST_BTN_X = 3;
-  public static final int LST_BTN_Y = 4;
+  public static final int THUMB = 2;
+  public static final int TRIGGER = 1;
+  public static final int LEFT_LOW = 3;
+  public static final int RIGHT_LOW = 4;
   public static final int LST_BTN_LBUMPER = 5;
   public static final int LST_BTN_RBUMPER = 6;
   public static final int LST_BTN_WINDOW = 7;

@@ -87,14 +87,14 @@ public class RobotContainer {
 
 
   /** Shooter **/
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_Y).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
+    new JoystickButton(m_Gamepad, 1).whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_Gamepad, 4).whileTrue(new Unshoot(m_shooter));
     new POVButton(m_Gamepad, Constants.Buttons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
     new POVButton(m_Gamepad, Constants.Buttons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
 
   /** Intake **/
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new Spintake(m_intake));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new SpoutTake(m_intake));
+    new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
+    new JoystickButton(m_Gamepad, 3).whileTrue(new SpoutTake(m_intake));
 
 
   }
