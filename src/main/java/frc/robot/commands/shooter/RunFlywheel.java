@@ -24,20 +24,17 @@ public class RunFlywheel extends CommandBase {
     addRequirements(shooter);
   }
 
-  // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize() {// called once when the command is scheduled
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
+  public void execute() {  //called continuously/repeatedly when the command is scheduled
     m_shooter.runFlywheel();
   }
 
-  // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(boolean interrupted) { //called once the command ends or is interrupted
     m_shooter.stopFlywheel();
   }
 
