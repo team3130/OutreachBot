@@ -87,6 +87,10 @@ public class RobotContainer {
 
 
   /** Shooter **/
+    new JoystickButton(m_Gamepad, 1).whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_Gamepad, 4).whileTrue(new Unshoot(m_shooter));
+    new POVButton(m_Gamepad, Constants.XBOXButtons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
+    new POVButton(m_Gamepad, Constants.XBOXButtons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_Y).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
     new POVButton(m_Gamepad, Constants.Buttons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
@@ -95,6 +99,14 @@ public class RobotContainer {
   /** Intake **/
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new SpoutTake(m_intake));
+
+    /** Chassis **/
+    if (Constants.addedFunctionalityMode){
+    new JoystickButton(m_Gamepad,Constants.XBOXButtons.LST_BTN_RBUMPER).whileTrue(new FaceTarget(m_chassis));  }
+
+    /** General **/
+    new JoystickButton(m_Gamepad, 12).whileTrue(new SwitchControllerMode(m_general));
+    new JoystickButton(m_Gamepad, 8).whileTrue(new SwitchFunctionalityMode(m_general));
 
 
   }

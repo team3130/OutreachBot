@@ -30,6 +30,18 @@ public class Chassis extends SubsystemBase {
   private final MotorControllerGroup m_motorsRight; //houses all the motors on the right side of the drivetrain
   private final MotorControllerGroup m_motorsLeft; //both right and left are used as a parameter for DifferentialDrive methods
 
+  /*private final SimpleMotorFeedforward m_feedforward;
+  private final PIDController m_leftPIDController;
+  private final PIDController m_rightPIDConttroller;*/
+  private double angle = 0;
+  private double chassisSpinP = 0.0099;
+  private double chassisSpinI = 0.000001;
+  private double chassisSpinD = 0.0015;
+  private final Consumer<Double[]> circleFixer;
+  private final PIDController m_spinnyPID;
+
+
+
   private final Navx m_navx = Navx.GetInstance();
 
   
@@ -76,6 +88,12 @@ public class Chassis extends SubsystemBase {
 
     //no one really knows
     m_drive.setSafetyEnabled(false);
+
+    /*m_feedforward = new SimpleMotorFeedforward(Constants.Chassis.ChassiskS, Constants.Chassis.ChassiskV, Constants.Chassis.ChassiskA);
+    m_leftPIDController = new PIDController(Constants.Chassis.LChassiskP, Constants.Chassis.LChassiskI, Constants.Chassis.LChassiskD);
+    m_rightPIDConttroller = new PIDController(Constants.Chassis.RChassiskP, Constants.Chassis.RChassiskI, Constants.Chassis.RChassiskD);
+    */
+    m_spinnyPID = new PIDController(chassisSpinP, chassisSpinI, chassisSpinD);
 
     //setting motors to brake mode (resists motion)
     configureBrakeMode(true);

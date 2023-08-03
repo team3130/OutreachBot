@@ -14,6 +14,10 @@ package frc.robot;
  */
 public final class Constants {
 
+  public static boolean controllerMode = false;
+  public static final boolean joystick = true;
+  public static final boolean xbox = false;
+  public static boolean addedFunctionalityMode = false;
   public static class CAN {
     public static final int SHOOTERFLYWHEEL = 6;
     public static final int LEFTINDEXER = 7;
@@ -33,20 +37,20 @@ public final class Constants {
     public static final int hi = 69;
     public static final int kDriverControllerPort = 0;
   }
-  public static class Buttons {
+  public static class XBOXButtons {
     /**
  * Gamepad Button List
  */
-  public static final int LST_BTN_A = 1;
-  public static final int LST_BTN_B = 2;
-  public static final int LST_BTN_X = 3;
-  public static final int LST_BTN_Y = 4;
-  public static final int LST_BTN_LBUMPER = 5;
-  public static final int LST_BTN_RBUMPER = 6;
-  public static final int LST_BTN_WINDOW = 7;
-  public static final int LST_BTN_MENU = 8;
-  public static final int LST_BTN_LJOYSTICKPRESS = 9;
-  public static final int LST_BTN_RJOYSTICKPRESS = 10;
+  public static final int B = 2;
+  public static final int A = 1;
+  public static final int X = 3;
+  public static final int Y = 4;
+  public static final int LBUMPER = 5;
+  public static final int RBUMPER = 6;
+  public static final int WINDOW = 7;
+  public static final int MENU = 8;
+  public static final int LJOYSTICKPRESS = 9;
+  public static final int RJOYSTICKPRESS = 10;
 
 /**
  * Gamepad POV List
