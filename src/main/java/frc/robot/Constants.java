@@ -18,6 +18,7 @@ public final class Constants {
   public static final boolean joystick = true;
   public static final boolean xbox = false;
   public static boolean addedFunctionalityMode = false;
+  
   public static class CAN {
     public static final int SHOOTERFLYWHEEL = 6;
     public static final int LEFTINDEXER = 7;
@@ -34,15 +35,14 @@ public final class Constants {
   }
 
   public static class OperatorConstants {
-    public static final int hi = 69;
     public static final int kDriverControllerPort = 0;
   }
   public static class XBOXButtons {
     /**
  * Gamepad Button List
  */
-  public static final int B = 2;
   public static final int A = 1;
+  public static final int B = 2;
   public static final int X = 3;
   public static final int Y = 4;
   public static final int LBUMPER = 5;

@@ -13,18 +13,17 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
+import frc.robot.commands.general.SwitchControllerMode;
+import frc.robot.commands.general.SwitchFunctionalityMode;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.commands.shooter.RunFlywheel;
 import frc.robot.commands.shooter.RunIndexers;
-import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.*;
 import frc.robot.commands.Intake.Spintake;
 import frc.robot.commands.Intake.SpoutTake;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.shooter.Unshoot;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,7 +37,9 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
+  private final General m_general = new General();
   private final XboxController m_Gamepad = new XboxController(0);
+
 
 
   /* Replace with CommandPS4Controller or CommandJoystick if needed
@@ -78,31 +79,27 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    /* Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand()); */
-
 
   /** Shooter **/
     new JoystickButton(m_Gamepad, 1).whileTrue(new Shoot(m_shooter));
     new JoystickButton(m_Gamepad, 4).whileTrue(new Unshoot(m_shooter));
     new POVButton(m_Gamepad, Constants.XBOXButtons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
     new POVButton(m_Gamepad, Constants.XBOXButtons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_Y).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_B).whileTrue(new Unshoot(m_shooter));
-    new POVButton(m_Gamepad, Constants.Buttons.LST_POV_N).whileTrue(new RunFlywheel(m_shooter));
-    new POVButton(m_Gamepad, Constants.Buttons.LST_POV_S).whileTrue(new RunIndexers(m_shooter));
+  
+    new JoystickButton(m_Gamepad, Constants.XBOXButtons.Y).whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_Gamepad, Constants.XBOXButtons.B).whileTrue(new Unshoot(m_shooter));
 
   /** Intake **/
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_X).whileTrue(new Spintake(m_intake));
-    new JoystickButton(m_Gamepad, Constants.Buttons.LST_BTN_A).whileTrue(new SpoutTake(m_intake));
+    new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
+    new JoystickButton(m_Gamepad, 3).whileTrue(new SpoutTake(m_intake));
+    
+    new JoystickButton(m_Gamepad, Constants.XBOXButtons.X).whileTrue(new Spintake(m_intake));
+    new JoystickButton(m_Gamepad, Constants.XBOXButtons.A).whileTrue(new SpoutTake(m_intake));
+
 
     /** Chassis **/
     if (Constants.addedFunctionalityMode){
-    new JoystickButton(m_Gamepad,Constants.XBOXButtons.LST_BTN_RBUMPER).whileTrue(new FaceTarget(m_chassis));  }
+    new JoystickButton(m_Gamepad,Constants.XBOXButtons.RBUMPER).whileTrue(new FaceTarget(m_chassis));  }
 
     /** General **/
     new JoystickButton(m_Gamepad, 12).whileTrue(new SwitchControllerMode(m_general));

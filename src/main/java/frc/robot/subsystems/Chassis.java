@@ -105,6 +105,13 @@ public class Chassis extends SubsystemBase {
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
   }
 
+  public double getMoveSpeedValue(double slider){
+    return -slider;
+  }
+  public double getTurnSpeedValue(double slider){
+    return -slider * 0.65;
+  }
+
   //used to configure brake mode (resists motion) or coast mode (doesn't) on all drive motors
   public void configureBrakeMode(boolean brake) {
     if (brake) {
