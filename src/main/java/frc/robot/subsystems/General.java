@@ -35,7 +35,7 @@ public class General extends SubsystemBase {
   }
   @Override
   public void initSendable(SendableBuilder builder) {// outputs to shuffleboard in a way that can be update-able in real time (many of these can be removed after testing)
-    builder.addBooleanProperty("Controller Type (T=Joystick, F=xbox)", this::getControllerType, this::setControllerType);
+    builder.addBooleanProperty("Controller Type (T=joystick, F=xbox)", this::getControllerType, this::setControllerType);
     builder.addBooleanProperty("Functionality (T=limited, F=all", this::getControllerType, this::setFunctionalityMode);
   }
 }
