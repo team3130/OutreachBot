@@ -38,11 +38,11 @@ public class Drive extends CommandBase {
 
   @Override
   public void execute() {   //called continuously/repeatedly when the command is scheduled
-    if (Constants.controllerMode == Constants.xbox) {
+    if (Constants.controllerType == Constants.xbox) {
         double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1);
         double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(4) * .8;
       }
-      else if (Constants.controllerMode == Constants.joystick) {
+      else if (Constants.controllerType == Constants.joystick) {
         double moveSpeed = -RobotContainer.m_driverGamepad.getRawAxis(1) * m_chassis.getMoveSpeedValue(RobotContainer.m_driverGamepad.getRawAxis(3)); //joystick up axis value (inverted) * speed scalar
         double turnSpeed = -RobotContainer.m_driverGamepad.getRawAxis(2) * m_chassis.getTurnSpeedValue(RobotContainer.m_driverGamepad.getRawAxis(3)); //joystick rotate value (inverted and scaled down) * speed scalar
       }

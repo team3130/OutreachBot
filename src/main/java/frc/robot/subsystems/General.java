@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -12,14 +12,6 @@ public class General extends SubsystemBase {
   /** Subsystem for general use */
   public General() {}
 
-  public static void debugSwitch(){
-    if (Constants.debugMode == true){
-      Constants.debugMode = false;
-    }
-    else {
-      Constants.debugMode = true;
-    }
-  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -28,5 +20,22 @@ public class General extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+  public boolean getControllerType(){
+    return Constants.controllerType;
+  }
+  public void setControllerType(boolean type){
+    Constants.controllerType = type;
+  }
+  public boolean getFunctionalityMode(){
+    return Constants.functionalityMode;
+  }
+  public void setFunctionalityMode(boolean type){
+    Constants.functionalityMode = type;
+  }
+  @Override
+  public void initSendable(SendableBuilder builder) {// outputs to shuffleboard in a way that can be update-able in real time (many of these can be removed after testing)
+    builder.addBooleanProperty("Controller Type (T=Joystick, F=xbox)", this::getControllerType, this::setControllerType);
+    builder.addBooleanProperty("Functionality (T=limited, F=all", this::getControllerType, this::setFunctionalityMode);
   }
 }

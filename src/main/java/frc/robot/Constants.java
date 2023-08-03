@@ -14,10 +14,13 @@ package frc.robot;
  */
 public final class Constants {
 
-  public static boolean controllerMode = false;
+  public static boolean controllerType = false;
   public static final boolean joystick = true;
   public static final boolean xbox = false;
-  public static boolean addedFunctionalityMode = false;
+  public static boolean functionalityMode = false;
+
+  public static boolean limited = true;
+  public static boolean all = false;
   
   public static class CAN {
     public static final int SHOOTERFLYWHEEL = 6;

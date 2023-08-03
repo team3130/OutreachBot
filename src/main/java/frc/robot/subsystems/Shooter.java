@@ -36,6 +36,24 @@ public class Shooter extends SubsystemBase {
   }
 
   /** GENERAL METHODS */
+  public int getShootButton(){
+    if (Constants.controllerType == Constants.joystick){
+       return 1;
+    }
+    else //controller mode == xbox
+    {
+      return Constants.XBOXButtons.Y;
+    }
+  }
+  public int getUnShootButton(){
+    if (Constants.controllerType == Constants.joystick){
+      return 4;
+    }
+    else //controller mode == xbox
+    {
+      return Constants.XBOXButtons.B;
+    }
+  }
   public void runFlywheel() {  //run flywheel at a given output
     flywheel.set(ControlMode.PercentOutput, flywheelSpeed);
   }

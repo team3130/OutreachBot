@@ -8,12 +8,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.sensors.Navx;
@@ -99,12 +96,50 @@ public class Chassis extends SubsystemBase {
 
     //setting motors to brake mode (resists motion)
     configureBrakeMode(true);
+
+    circleFixer = (Double[] angle) -> {
+      angle[0] = ((angle[0] % 360) + 360) % 360;
+      angle[0] += ((angle[0] > 180) ? -360 : 0);
+    };
   }
 
   /** GENERAL METHODS**/
   // used to drive the robot, parameters are joystick, joystick, if you want inputs squared (creates a smoother driving experience)
   public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
+  }
+  public int getFaceTargetButton(){
+    if (Constants.controllerType == Constants.joystick){
+      return Constants.XBOXButtons.LST_POV_N;
+    }
+    else //controller mode == xbox
+    {
+      return Constants.XBOXButtons.RBUMPER;
+    }
+  }
+  public void resetPIDLoop() {
+    m_spinnyPID.reset();
+    tuneTolerance();
+    m_spinnyPID.enableContinuousInput(-180, 180); //this makes degrees go [-180,180] rather than [0,360] or [0,infinity]
+  }
+  public void tuneTolerance() {
+    m_spinnyPID.setTolerance(3.5, 0.02);
+    m_spinnyPID.setIntegratorRange(-0.1, 0.1);
+  }
+  public void spinOutput() {
+    driveArcade(0, -m_spinnyPID.calculate(getSpinnyAngle()), false);
+  }
+  public double getSpinnyAngle() {
+    if (Navx.getNavxPresent()) {
+      // normalize to positive 360
+      double angle = ((Navx.getAngle() % 360) + 360) % 360;
+      return (angle + ((angle > 180) ? -360 : 0));
+    } else {
+      return 0;
+    }
+  }
+  public void updatePIDValues() { //make sure the PID vals in use are up to date from shuffleboard
+    m_spinnyPID.setPID(getSpinnyP(), getSpinnyI(), getSpinnyD());
   }
 
   public double getMoveSpeedValue(double slider){
@@ -140,12 +175,45 @@ public class Chassis extends SubsystemBase {
   }
   /** GETTERS AND SETTERS**/
   public double getNavxRotation(){ return Navx.getHeading(); } //return navx heading aka where the bot is facing [-180,180]
-
+  public double getGoalAngle(){
+    return angle;
+  }
+  public void setGoalAngle(double goal){
+    angle = goal;
+  }
+  public double getSpinnyP(){
+    return chassisSpinP;
+  }
+  public void setSpinnyP(double goal){
+    chassisSpinP = goal;
+  }
+  public double getSpinnyI(){
+    return chassisSpinI;
+  }
+  public void setSpinnyI(double goal){
+    chassisSpinI = goal;
+  }
+  public double getSpinnyD(){
+    return chassisSpinD;
+  }
+  public void setSpinnyD(double goal){
+    chassisSpinD = goal;
+  }
   @Override
-  public void initSendable(SendableBuilder builder) { // outputs to shuffleboard in a way that can be update-able in real time (many of these can be removed after testing)
+  public void initSendable(SendableBuilder builder) {// outputs to shuffleboard in a way that can be update-able in real time (many of these can be removed after testing)
     builder.addDoubleProperty("Navx rotation", this::getNavxRotation, null);
     //builder.addVariableTypeProperty("name to display", this:getter, if you want it to be editable-> this::setter else -> null);
+    builder.addDoubleProperty("Goal Rotation", this::getGoalAngle, this::setGoalAngle);
+    builder.addDoubleProperty("Spinny P", this::getSpinnyP, this::setSpinnyP);
+    builder.addDoubleProperty("Spinny I", this::getSpinnyI, this::setSpinnyI);
+    builder.addDoubleProperty("Spinny D", this::getSpinnyD, this::setSpinnyD);
   }
+  public void setSpinnySetPoint(double setpoint) {
+    Double[] angle = new Double[] {setpoint}; //caleb kugel's circle stuff
+    circleFixer.accept(angle); //""
+    m_spinnyPID.setSetpoint(angle[0]); //???
+  }
+
 
   @Override
   public void periodic() {

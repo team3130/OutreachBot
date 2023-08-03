@@ -5,6 +5,7 @@
 package frc.robot.commands.general;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.General;
 
 /** An example command that uses an example subsystem. */
@@ -26,7 +27,12 @@ public class SwitchFunctionalityMode extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_general.debugSwitch();
+    if (Constants.functionalityMode == Constants.limited){
+      Constants.controllerType = Constants.all;
+    }
+    if (Constants.functionalityMode == Constants.all){
+      Constants.controllerType = Constants.limited;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
