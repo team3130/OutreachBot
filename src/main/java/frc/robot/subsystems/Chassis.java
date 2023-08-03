@@ -128,7 +128,7 @@ public class Chassis extends SubsystemBase {
   public void resetPIDLoop() {
     m_spinnyPID.reset();
     tuneTolerance();
-    m_spinnyPID.enableContinuousInput(-180, 180);
+    m_spinnyPID.enableContinuousInput(-180, 180); //this makes degrees go [-180,180] rather than [0,360] or [0,infinity]
   }
   public void tuneTolerance() {
     m_spinnyPID.setTolerance(3.5, 0.02);
@@ -146,7 +146,7 @@ public class Chassis extends SubsystemBase {
       return 0;
     }
   }
-  public void updatePIDValues() {
+  public void updatePIDValues() { //make sure the PID vals in use are up to date from shuffleboard
     m_spinnyPID.setPID(getSpinnyP(), getSpinnyI(), getSpinnyD());
   }
 
@@ -264,9 +264,9 @@ public class Chassis extends SubsystemBase {
     builder.addDoubleProperty("Spinny D", this::getSpinnyD, this::setSpinnyD);
   }
   public void setSpinnySetPoint(double setpoint) {
-    Double[] angle = new Double[] {setpoint};
-    circleFixer.accept(angle);
-    m_spinnyPID.setSetpoint(angle[0]);
+    Double[] angle = new Double[] {setpoint}; //caleb kugel's circle stuff
+    circleFixer.accept(angle); //""
+    m_spinnyPID.setSetpoint(angle[0]); //???
   }
 
   @Override
