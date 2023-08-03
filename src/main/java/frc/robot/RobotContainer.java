@@ -13,18 +13,17 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
+import frc.robot.commands.general.SwitchControllerMode;
+import frc.robot.commands.general.SwitchFunctionalityMode;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.commands.shooter.RunFlywheel;
 import frc.robot.commands.shooter.RunIndexers;
-import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.*;
 import frc.robot.commands.Intake.Spintake;
 import frc.robot.commands.Intake.SpoutTake;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.shooter.Unshoot;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,7 +37,9 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
+  private final General m_general = new General();
   private final XboxController m_Gamepad = new XboxController(0);
+
 
 
   /* Replace with CommandPS4Controller or CommandJoystick if needed
@@ -95,6 +96,10 @@ public class RobotContainer {
   /** Intake **/
     new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, 3).whileTrue(new SpoutTake(m_intake));
+
+    /** General **/
+    new JoystickButton(m_Gamepad, 12).whileTrue(new SwitchControllerMode(m_general));
+    new JoystickButton(m_Gamepad, 8).whileTrue(new SwitchFunctionalityMode(m_general));
 
 
   }

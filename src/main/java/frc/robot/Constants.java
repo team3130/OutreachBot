@@ -14,6 +14,8 @@ package frc.robot;
  */
 public final class Constants {
 
+  public static boolean joystickMode = false;
+  public static boolean addedFunctionalityMode = false;
   public static class CAN {
     public static final int SHOOTERFLYWHEEL = 6;
     public static final int LEFTINDEXER = 7;
