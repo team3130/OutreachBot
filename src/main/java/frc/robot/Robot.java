@@ -5,6 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.sensors.Navx;
@@ -20,6 +22,10 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private final SendableChooser<String> m_chooser_controller = new SendableChooser<>();
+
+  private final SendableChooser<String> m_chooser_functionality = new SendableChooser<>();
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -28,7 +34,18 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    // controller options
+    m_chooser_controller.setDefaultOption("joystick", "joystick");
+    m_chooser_controller.addOption("xbox", "xbox");
+    SmartDashboard.putData("Controller", m_chooser_controller);
+
+
+    // functionality options
+    m_chooser_functionality.setDefaultOption("limited", "limited");
+    m_chooser_functionality.addOption("all", "all");
+    SmartDashboard.putData("Functionality", m_chooser_functionality);
+
+    m_robotContainer = new RobotContainer(m_chooser_functionality, m_chooser_controller);
   }
 
   /**

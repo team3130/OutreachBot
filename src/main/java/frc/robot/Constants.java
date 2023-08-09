@@ -13,15 +13,6 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-  public static boolean controllerType = false;
-  public static final boolean joystick = true;
-  public static final boolean xbox = false;
-  public static boolean functionalityMode = false;
-
-  public static boolean limited = true;
-  public static boolean all = false;
-  
   public static class CAN {
     public static final int SHOOTERFLYWHEEL = 6;
     public static final int LEFTINDEXER = 7;

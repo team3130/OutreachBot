@@ -8,14 +8,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Autos;
 import frc.robot.commands.chassis.FaceTarget;
-import frc.robot.commands.general.SwitchControllerMode;
-import frc.robot.commands.general.SwitchFunctionalityMode;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.commands.shooter.RunFlywheel;
 import frc.robot.commands.shooter.RunIndexers;
@@ -25,6 +24,9 @@ import frc.robot.commands.Intake.SpoutTake;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.shooter.Unshoot;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,8 +40,10 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
-  private final General m_general = new General();
   private final XboxController m_Gamepad = new XboxController(0);
+  protected SendableChooser<String> m_chooser_controller;
+  protected  SendableChooser<String> m_chooser_functionalities;
+
 
 
 
@@ -60,43 +64,36 @@ public class RobotContainer {
   public static Joystick m_driverGamepad = new Joystick(0);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
-    m_chassis.setDefaultCommand(new Drive(m_chassis, this));
 
-    vomitShuffleBoardData();
+  private void configureBindings() {
+  /** Shooter **/
+  if (m_chooser_controller.getSelected().equals("joystick")){
+    new JoystickButton(m_Gamepad, 1).whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_Gamepad, 4).whileTrue(new Unshoot(m_shooter));
+  }
+  else if (m_chooser_controller.getSelected().equals("xbox")){
+    new JoystickButton(m_Gamepad,  Constants.XBOXButtons.Y).whileTrue(new Shoot(m_shooter));
+    new JoystickButton(m_Gamepad, Constants.XBOXButtons.Y).whileTrue(new Unshoot(m_shooter));
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.co
-   * mmand.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
-
-
-  /** Shooter **/
-    new JoystickButton(m_Gamepad, m_shooter.getShootButton()).whileTrue(new Shoot(m_shooter));
-    new JoystickButton(m_Gamepad, m_shooter.getUnShootButton()).whileTrue(new Unshoot(m_shooter));
-
   /** Intake **/
-    new JoystickButton(m_Gamepad, m_intake.getSpintakeButton()).whileTrue(new Spintake(m_intake));
-    new JoystickButton(m_Gamepad, m_intake.getSpoutakeButton()).whileTrue(new SpoutTake(m_intake));
+    if (m_chooser_controller.getSelected().equals("joystick")){
+      new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
+      new JoystickButton(m_Gamepad, 3).whileTrue(new SpoutTake(m_intake));}
+    else if (m_chooser_controller.getSelected().equals("xbox")) {
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.X).whileTrue(new Spintake(m_intake));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.A).whileTrue(new SpoutTake(m_intake));
+    }
+
 
     /** Chassis **/
-    new JoystickButton(m_Gamepad,Constants.XBOXButtons.RBUMPER).whileTrue(new FaceTarget(m_chassis));  //only if all
+    if (m_chooser_controller.getSelected().equals("joystick") && m_chooser_functionalities.getSelected().equals("all")) {
+      new JoystickButton(m_Gamepad, 6).whileTrue(new FaceTarget(m_chassis));
+    } else if (m_chooser_controller.getSelected().equals("xbox") && m_chooser_functionalities.getSelected().equals("all")){
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.RBUMPER).whileTrue(new FaceTarget(m_chassis));  //only if all
+    } else if (m_chooser_functionalities.getSelected().equals("limited")) {
 
-    /** General **/
-    new JoystickButton(m_Gamepad, 12).whileTrue(new SwitchControllerMode(m_general));
-    new JoystickButton(m_Gamepad, 8).whileTrue(new SwitchFunctionalityMode(m_general));
-
-
+    }
   }
 
   public void vomitShuffleBoardData() {
@@ -107,7 +104,18 @@ public class RobotContainer {
       ShuffleboardTab shooter = Shuffleboard.getTab("Shooter");
       shooter.add(m_shooter);
   }
+  public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser) {
 
+
+    m_chooser_controller = controllerChooser;
+    m_chooser_functionalities = functionalityChooser;configureBindings();
+    m_chassis.setDefaultCommand(new Drive(m_chassis, this));
+
+    vomitShuffleBoardData();
+  }
+  public String returnController(){
+    return m_chooser_controller.getSelected();
+  }
   /**
    * Use this to pass the autonomous
    * command to the main {@link Robot} class.

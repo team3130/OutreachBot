@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.sensors.Navx;
 
 import java.util.function.Consumer;
@@ -108,15 +109,6 @@ public class Chassis extends SubsystemBase {
   public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
   }
-  public int getFaceTargetButton(){
-    if (Constants.controllerType == Constants.joystick){
-      return Constants.XBOXButtons.LST_POV_N;
-    }
-    else //controller mode == xbox
-    {
-      return Constants.XBOXButtons.RBUMPER;
-    }
-  }
   public void resetPIDLoop() {
     m_spinnyPID.reset();
     tuneTolerance();
@@ -173,6 +165,39 @@ public class Chassis extends SubsystemBase {
     m_backLeftDrive.configOpenloopRamp(maxRampRateSeconds);
 
   }
+  public double moveSpeed(String controller){
+    if (controller.equals("joystick")){
+      return -RobotContainer.m_driverGamepad.getRawAxis(1) * movingScalar();
+    }
+    else if (controller.equals("xbox")) {
+      return  -RobotContainer.m_driverGamepad.getRawAxis(1); //joystick up axis value (inverted)
+    }
+    else return 0;
+  }
+  public double turnSpeed(String controller){
+    if (controller.equals("joystick")){
+      return -RobotContainer.m_driverGamepad.getRawAxis(2) * turningScalar();
+    }
+    else if (controller.equals("xbox")) {
+      return  -RobotContainer.m_driverGamepad.getRawAxis(2);
+    }
+    else return 0;
+  }
+
+  public double movingScalar(){
+    double x = -RobotContainer.m_driverGamepad.getRawAxis(3);
+    double y = ((x+1)/2) * 1.5;
+    if (y>1){
+      return 1;}
+    if(y<0.6){
+      return 0.6;}
+    else return y;
+    }
+
+  public double turningScalar(){
+    return movingScalar() * 0.9;
+  }
+
   /** GETTERS AND SETTERS**/
   public double getNavxRotation(){ return Navx.getHeading(); } //return navx heading aka where the bot is facing [-180,180]
   public double getGoalAngle(){

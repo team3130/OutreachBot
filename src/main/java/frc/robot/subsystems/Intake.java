@@ -34,24 +34,6 @@ public class Intake extends SubsystemBase {
 
   /** GENERAL METHODS */
 
-  public int getSpintakeButton(){
-    if (Constants.controllerType == Constants.joystick){
-      return 2;
-    }
-    else //controller mode == xbox
-    {
-      return Constants.XBOXButtons.X;
-    }
-  }
-  public int getSpoutakeButton(){
-    if (Constants.controllerType == Constants.joystick){
-      return 3;
-    }
-    else //controller mode == xbox
-    {
-      return Constants.XBOXButtons.A;
-    }
-  }
   public void spinIntake() { //spin beater bar to intake
     m_intake.set(ControlMode.PercentOutput, speed);
   }
