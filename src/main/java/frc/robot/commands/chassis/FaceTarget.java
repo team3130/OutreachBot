@@ -31,6 +31,7 @@ public class FaceTarget extends CommandBase {
 
   @Override
   public void execute() {
+      m_chassis.spinOutput();
   }
 
   @Override
