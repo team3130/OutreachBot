@@ -42,7 +42,7 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   private final XboxController m_Gamepad = new XboxController(0);
   protected SendableChooser<String> m_chooser_controller;
-  protected  SendableChooser<String> m_chooser_functionalities;
+  protected  SendableChooser<String> m_chooser_functionality;
 
 
 
@@ -79,7 +79,9 @@ public class RobotContainer {
   /** Intake **/
     if (m_chooser_controller.getSelected().equals("joystick")){
       new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
-      new JoystickButton(m_Gamepad, 3).whileTrue(new SpoutTake(m_intake));}
+      new JoystickButton(m_Gamepad, 3).whileTrue(new SpoutTake(m_intake));
+      new JoystickButton(m_Gamepad, 6).whileTrue(new FaceTarget(m_chassis));}
+
     else if (m_chooser_controller.getSelected().equals("xbox")) {
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.X).whileTrue(new Spintake(m_intake));
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.A).whileTrue(new SpoutTake(m_intake));
@@ -87,11 +89,11 @@ public class RobotContainer {
 
 
     /** Chassis **/
-    if (m_chooser_controller.getSelected().equals("joystick") && m_chooser_functionalities.getSelected().equals("all")) {
+    if (m_chooser_controller.getSelected().equals("joystick") && m_chooser_functionality.getSelected().equals("all")) {
       new JoystickButton(m_Gamepad, 6).whileTrue(new FaceTarget(m_chassis));
-    } else if (m_chooser_controller.getSelected().equals("xbox") && m_chooser_functionalities.getSelected().equals("all")){
+    } else if (m_chooser_controller.getSelected().equals("xbox") && m_chooser_functionality.getSelected().equals("all")){
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.RBUMPER).whileTrue(new FaceTarget(m_chassis));  //only if all
-    } else if (m_chooser_functionalities.getSelected().equals("limited")) {
+    } else if (m_chooser_functionality.getSelected().equals("limited")) {
 
     }
   }
@@ -108,7 +110,8 @@ public class RobotContainer {
 
 
     m_chooser_controller = controllerChooser;
-    m_chooser_functionalities = functionalityChooser;configureBindings();
+    m_chooser_functionality = functionalityChooser;
+    configureBindings();
     m_chassis.setDefaultCommand(new Drive(m_chassis, this));
 
     vomitShuffleBoardData();
