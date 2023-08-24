@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +20,7 @@ import frc.robot.sensors.Navx;
 import java.util.function.Consumer;
 
 public class Chassis extends SubsystemBase {
-  
+  public String joystickName = DriverStation.getJoystickName(0);
   private final WPI_TalonFX m_frontLeftDrive; //front left drivetrain motor
   private final WPI_TalonFX m_backLeftDrive;
   private final WPI_TalonFX m_backRightDrive;
@@ -32,7 +33,7 @@ public class Chassis extends SubsystemBase {
 
   /*private final SimpleMotorFeedforward m_feedforward;
   private final PIDController m_leftPIDController;
-  private final PIDController m_rightPIDConttroller;*/
+  private final PIDController m_rightPIDController;*/
   private double angle = 0;
   private double chassisSpinP = 0.0099;
   private double chassisSpinI = 0.000001;
@@ -165,30 +166,31 @@ public class Chassis extends SubsystemBase {
     m_backLeftDrive.configOpenloopRamp(maxRampRateSeconds);
 
   }
-  public double moveSpeed(String controller){
-    if (controller.equals("joystick")){
-      return -RobotContainer.m_driverGamepad.getRawAxis(1) * movingScalar();
+
+  public double moveSpeed(){
+    if (getJoystickName().equals("Logitech Extreme 3D")){
+      return -RobotContainer.m_Gamepad.getRawAxis(1) * movingScalar();
     }
-    else if (controller.equals("xbox")) {
-      return  -RobotContainer.m_driverGamepad.getRawAxis(1); //joystick up axis value (inverted)
+    else if (getJoystickName().equals("Controller (Xbox One For Windows)")){
+      return  -RobotContainer.m_Gamepad.getRawAxis(1); //joystick up axis value (inverted)
     }
     else return 0;
   }
-  public double turnSpeed(String controller){
-    if (controller.equals("joystick")){
-      return -RobotContainer.m_driverGamepad.getRawAxis(2) * turningScalar();
+  public double turnSpeed(){
+    if (getJoystickName().equals("Logitech Extreme 3D")){
+      return -RobotContainer.m_Gamepad.getRawAxis(2) * turningScalar();
     }
-    else if (controller.equals("xbox")) {
-      return  -RobotContainer.m_driverGamepad.getRawAxis(2);
+    else if (getJoystickName().equals("Controller (Xbox One For Windows)")){
+      return  -RobotContainer.m_Gamepad.getRawAxis(4);
     }
     else return 0;
   }
 
   public double movingScalar(){
-    double x = -RobotContainer.m_driverGamepad.getRawAxis(3);
-    double y = ((x+1)/2) * 1.5;
+    double x = -RobotContainer.m_Gamepad.getRawAxis(3);
+    double y = ((x+1)/2) * 1.5; // taking slider return from [-1,1] to [0,1] and then scaling it up to enable real ue of more of its range
     if (y>1){
-      return 1;}
+      return 1;} //eliminating values>1
     if(y<0.6){
       return 0.6;}
     else return y;
@@ -224,6 +226,9 @@ public class Chassis extends SubsystemBase {
   public void setSpinnyD(double goal){
     chassisSpinD = goal;
   }
+  public String getJoystickName(){
+    return DriverStation.getJoystickName(0);
+  }
   @Override
   public void initSendable(SendableBuilder builder) {// outputs to shuffleboard in a way that can be update-able in real time (many of these can be removed after testing)
     builder.addDoubleProperty("Navx rotation", this::getNavxRotation, null);
@@ -232,7 +237,10 @@ public class Chassis extends SubsystemBase {
     builder.addDoubleProperty("Spinny P", this::getSpinnyP, this::setSpinnyP);
     builder.addDoubleProperty("Spinny I", this::getSpinnyI, this::setSpinnyI);
     builder.addDoubleProperty("Spinny D", this::getSpinnyD, this::setSpinnyD);
+
+    builder.addStringProperty("Controller Type", this::getJoystickName, null);
   }
+
   public void setSpinnySetPoint(double setpoint) {
     Double[] angle = new Double[] {setpoint}; //caleb kugel's circle stuff
     circleFixer.accept(angle); //""

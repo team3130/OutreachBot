@@ -8,7 +8,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase {
   
@@ -16,6 +18,7 @@ public class Intake extends SubsystemBase {
   private double speed = 0.9; //default 90% output for the beater bar
   private double volt = 9.5; //voltage compensation max
   private boolean voltComp = true; //voltage compensation on
+  public RobotContainer m_robotContainer;
 
   public Intake() {
     //instantiate motor
@@ -49,6 +52,7 @@ public class Intake extends SubsystemBase {
   public void stop() { //stop motor
     m_intake.set(ControlMode.PercentOutput, 0);
   }
+
 
   /** GETTERS AND SETTERS */
   public double getSpeed() { //gets or return the variable speed

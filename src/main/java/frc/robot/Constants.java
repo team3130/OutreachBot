@@ -14,7 +14,6 @@ package frc.robot;
  */
 public final class Constants {
 
-  public static boolean controllerType = false;
   public static final boolean joystick = true;
   public static final boolean xbox = false;
   public static boolean functionalityMode = false;

@@ -36,13 +36,13 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     // controller options
     m_chooser_controller.setDefaultOption("joystick", "joystick");
-    m_chooser_controller.addOption("xbox", "xbox");
+    m_chooser_controller.addOption("joystick", "joystick");
     SmartDashboard.putData("Controller", m_chooser_controller);
 
 
     // functionality options
-    m_chooser_functionality.setDefaultOption("limited", "limited");
-    m_chooser_functionality.addOption("all", "all");
+    m_chooser_functionality.setDefaultOption("all", "all");
+    m_chooser_functionality.addOption("limited", "limited");
     SmartDashboard.putData("Functionality", m_chooser_functionality);
 
     m_robotContainer = new RobotContainer(m_chooser_functionality, m_chooser_controller);
@@ -66,10 +66,13 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -96,6 +99,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     Navx.resetNavX();
+    m_robotContainer.configureBindings();
+
   }
 
   /** This function is called periodically during operator control. */
