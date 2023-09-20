@@ -36,19 +36,19 @@ public class Resetake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.Spoutake();
+    m_Intake.spoutTake();
     if (m_timer.hasElapsed(.165)) {
-      m_Intake.Spintake();
+      m_Intake.spinIntake();
     }
     if (m_timer.hasElapsed(.6)) {
-      m_Intake.Stoptake();
+      m_Intake.stop();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Intake.Stoptake();
+    m_Intake.stop();
   }
 
   // Returns true when the command should end.

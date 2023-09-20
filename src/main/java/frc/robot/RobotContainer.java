@@ -12,11 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Intake.Resetake;
+import frc.robot.commands.Intake.Spouttake;
 import frc.robot.commands.chassis.FaceTarget;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.subsystems.*;
 import frc.robot.commands.Intake.Spintake;
-import frc.robot.commands.Intake.SpoutTake;
+import frc.robot.commands.Intake.Spouttake;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.shooter.Unshoot;
 
@@ -69,11 +71,14 @@ public class RobotContainer {
   /** Intake **/
   if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
     new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
-    new JoystickButton(m_Gamepad, 3).whileTrue(new SpoutTake(m_intake));}
+    new JoystickButton(m_Gamepad, 3).whileTrue(new Spouttake(m_intake));
+    new JoystickButton(m_Gamepad, 5).whileTrue(new Resetake(m_intake));
+  }
 
   else if (m_chassis.getJoystickName().equals("Controller (Xbox One For Windows)")){
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.X).whileTrue(new Spintake(m_intake));
-      new JoystickButton(m_Gamepad, Constants.XBOXButtons.A).whileTrue(new SpoutTake(m_intake));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.A).whileTrue(new Spouttake(m_intake));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LBUMPER).whileTrue(new Resetake(m_intake));
     }
 
 
