@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
+import frc.robot.commands.Intake.Resetake;
+import frc.robot.commands.Intake.Spintake;
+import frc.robot.commands.Intake.Spoutake;
 import frc.robot.commands.chassis.FaceTarget;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.subsystems.*;
@@ -29,6 +32,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
+  private final Intake m_Intake = new Intake();
   protected SendableChooser<String> m_chooser_controller;
   protected SendableChooser<String> m_chooser_functionality;
 
@@ -67,7 +71,9 @@ public class RobotContainer {
     /** Intake **/
     if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")) {
       /** PUT INTAKE BUTTONS HERE **/
-
+    new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_Intake));
+    new JoystickButton(m_Gamepad, 3).whileTrue(new Spoutake(m_Intake));
+    new JoystickButton(m_Gamepad, 5).whileTrue(new Resetake(m_Intake));
 
     }
   }
