@@ -25,13 +25,12 @@ public class Spintake extends CommandBase {
   /** ALL THE FOLLOWING ARE BUILT-IN METHODS BASED ON WHEN THE COMMAND IS RUN**/
   @Override
   public void initialize() {  // called once when the command is scheduled
-    m_intake.updateEnableVoltageCompensation(m_intake.getVoltageCompBoolean());
-    m_intake.updateVoltageCompensationNum(m_intake.getVoltNum());
+    m_intake.spinIntake();
   }
 
   @Override  //called continuously/repeatedly when the command is scheduled
   public void execute() {
-    m_intake.spinIntake();
+
   }
 
   @Override //called once the command ends or is interrupted

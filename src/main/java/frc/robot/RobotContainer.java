@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Intake.Resetake;
 import frc.robot.commands.Intake.Spouttake;
 import frc.robot.commands.chassis.FaceTarget;
 import frc.robot.commands.chassis.Drive;
+import frc.robot.commands.chassis.PullOut;
 import frc.robot.subsystems.*;
 import frc.robot.commands.Intake.Spintake;
 import frc.robot.commands.Intake.Spouttake;
@@ -101,6 +103,9 @@ public class RobotContainer {
     m_chassis.setDefaultCommand(new Drive(m_chassis, this));
 
     vomitShuffleBoardData();
+  }
+  public CommandBase pullOut(){
+    return new PullOut(m_chassis);
   }
   public String returnController(){
     return m_chooser_controller.getSelected();

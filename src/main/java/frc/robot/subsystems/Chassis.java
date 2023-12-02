@@ -131,6 +131,12 @@ public class Chassis extends SubsystemBase {
       return 0;
     }
   }
+  public void driveForward(){
+    m_drive.arcadeDrive(0.5, 0);
+  }
+  public void stopDriving(){
+    m_drive.arcadeDrive(0,0);
+  }
   public void updatePIDValues() { //make sure the PID vals in use are up to date from shuffleboard
     m_spinnyPID.setPID(getSpinnyP(), getSpinnyI(), getSpinnyD());
   }
@@ -169,7 +175,7 @@ public class Chassis extends SubsystemBase {
 
   public double moveSpeed(){
     if (getJoystickName().equals("Logitech Extreme 3D")){
-      return -RobotContainer.m_Gamepad.getRawAxis(1) * movingScalar();
+      return -RobotContainer.m_Gamepad.getRawAxis(1);
     }
     else if (getJoystickName().equals("Controller (Xbox One For Windows)")){
       return  -RobotContainer.m_Gamepad.getRawAxis(1); //joystick up axis value (inverted)
@@ -178,8 +184,8 @@ public class Chassis extends SubsystemBase {
   }
   public double turnSpeed(){
     if (getJoystickName().equals("Logitech Extreme 3D")){
-      return -RobotContainer.m_Gamepad.getRawAxis(2) * turningScalar();
-    }
+      return -RobotContainer.m_Gamepad.getRawAxis(2) * 0.8 ;}
+  
     else if (getJoystickName().equals("Controller (Xbox One For Windows)")){
       return  -RobotContainer.m_Gamepad.getRawAxis(4);
     }
