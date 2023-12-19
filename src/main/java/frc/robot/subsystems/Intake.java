@@ -37,7 +37,7 @@ public class Intake extends SubsystemBase {
 
   /** GENERAL METHODS */
 
-  public void spinIntake() { //spin beater bar to intake
+  public void spinIntake() { // spin beater bar to intake
     m_intake.set(ControlMode.PercentOutput, speed);
   }
   public void spoutTake() { //spin beater bar backwards to eject out of intake

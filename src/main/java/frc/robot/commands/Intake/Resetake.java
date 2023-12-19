@@ -12,16 +12,17 @@ import edu.wpi.first.wpilibj.Timer;
 /** An example command that uses an example subsystem. */
 public class Resetake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Intake m_Intake;
-  private Timer m_timer;
+  private final Intake intake;
+  private Timer timer;
+
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
   public Resetake(Intake subsystem) {
-    m_Intake = subsystem;
-    m_timer = new Timer();
+    intake = subsystem;
+    timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -29,31 +30,30 @@ public class Resetake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_timer.reset();
-    m_timer.start();
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.spoutTake();
-    if (m_timer.hasElapsed(.165)) {
-      m_Intake.spinIntake();
+    intake.spoutTake();
+    if (timer.hasElapsed(.165)) {
+      intake.spinIntake();
     }
-    if (m_timer.hasElapsed(.6)) {
-      m_Intake.stop();
+    if (timer.hasElapsed(.6)) {
+      intake.stop();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Intake.stop();
+    intake.stop();
   }
 
   // Returns true when the command should end.
   @Override
-
   public boolean isFinished() {
     return false;
   }
