@@ -81,10 +81,8 @@ public class RobotContainer {
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.X).whileTrue(new Spintake(m_intake));
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.A).whileTrue(new Spouttake(m_intake));
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.LBUMPER).whileTrue(new Resetake(m_intake));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.RBUMPER).whileTrue(new FaceTarget(m_chassis));
     }
-
-
-
   }
 
   public void vomitShuffleBoardData() {
@@ -107,6 +105,7 @@ public class RobotContainer {
   public CommandBase pullOut(){
     return new PullOut(m_chassis);
   }
+
   public String returnController(){
     return m_chooser_controller.getSelected();
   }

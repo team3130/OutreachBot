@@ -12,6 +12,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -132,8 +133,9 @@ public class Chassis extends SubsystemBase {
     }
   }
   public void driveForward(){
-    m_drive.arcadeDrive(0.5, 0);
+    m_drive.arcadeDrive(0.75, 0);
   }
+
   public void stopDriving(){
     m_drive.arcadeDrive(0,0);
   }
