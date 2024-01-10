@@ -82,6 +82,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     rainbow();
+    // oneColor();
     m_led.setData(m_ledBuffer);
     CommandScheduler.getInstance().run();
   }
