@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
       // Calculate the hue - hue is easier for rainbows because the color
       // shape is a circle so only one value needs to precess
       final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
-      // Set the value
+      // Set the value, s == saturation, v == brightness value
       m_ledBuffer.setHSV(i, hue, 255, 128);
     }
     // Increase by to make the rainbow "move"
