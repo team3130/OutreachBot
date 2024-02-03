@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
 
     m_robotContainer = new RobotContainer(m_chooser_functionality, m_chooser_controller);
 
-    createHues();
+    //createHues();
 
     /// PWM port 9
     // Must be a PWM header, not MXP or DIO
@@ -83,62 +83,9 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    rainbow();
     // oneColor();
     m_led.setData(m_ledBuffer);
     CommandScheduler.getInstance().run();
-  }
-
-
-  public void oneColor() {
-    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      // Sets the specified LED to the RGB values for red
-      m_ledBuffer.setHSV(i, 0, 0, 128);
-    }
-  }
-
-  public void rainbow() {
-    int m_rainbowFirstPixelHue = 20;
-    // For every pixel
-    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      // Calculate the hue - hue is easier for rainbows because the color
-      // shape is a circle so only one value needs to precess
-      final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
-      // Set the value
-      m_ledBuffer.setHSV(i, hue, 255, 128);
-    }
-    // Increase by to make the rainbow "move"
-    m_rainbowFirstPixelHue += 3;
-    // Check bounds
-    m_rainbowFirstPixelHue %= 180;
-  }
-
-  public int[] createHues() {
-    int m_rainbowFirstPixelHue = 20;
-    int[] hues = new int[m_ledBuffer.getLength()];
-
-    // For every pixel
-    for (var i = 0; i < m_ledBuffer.getLength(); i++) {
-      // Calculate the hue - hue is easier for rainbows because the color
-      // shape is a circle so only one value needs to precess
-      hues[i] = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
-    }
-    // Increase by to make the rainbow "move"
-    m_rainbowFirstPixelHue += 3;
-    // Check bounds
-    m_rainbowFirstPixelHue %= 180;
-
-    return hues;
-  }
-
-  public void movingRainbow(int[] hues, int index) {
-    for (int i = 0; i <= hues.getLength(); i++) {
-      m_ledBuffer.setHSV(i, hues[i], 255, 128);
-    }
-
-    for(int i = 0; i < m_ledBuffer.getLength(); i++) {
-      
-    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
