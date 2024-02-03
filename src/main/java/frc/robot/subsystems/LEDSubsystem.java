@@ -20,7 +20,7 @@ public class LEDSubsystem extends SubsystemBase {
   private int hue = 0;
   private int sat = 0;
   private int value = 0;
-  private int firstPixelColor = 20;
+  private int rainbowFirstPixelHue = 20;
 
   /** Creates a new ExampleSubsystem. */
   public LEDSubsystem() {
@@ -104,21 +104,20 @@ public class LEDSubsystem extends SubsystemBase {
     led.setData(ledBuffer);
   }
 
-  public void movingRainbow(int firstColor) {
+  public void gayBow() {
+
+    // For every pixel
     for (var i = 0; i < ledBuffer.getLength(); i++) {
-      final var hue = (firstColor + (i * 180 / ledBuffer.getLength())) % 180;
+      // Calculate the hue - hue is easier for rainbows because the color
+      // shape is a circle so only one value needs to precess
+      final var hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
       ledBuffer.setHSV(i, hue, 255, 128);
     }
+    // Increase by to make the rainbow "move"
+    rainbowFirstPixelHue += 3;
+    // Check bounds
+    rainbowFirstPixelHue %= 180;
     led.setData(ledBuffer);
-  }
-
-  public int getFirstPixelColor() {
-    return firstPixelColor;
-  }
-
-  public int getNextFirstPixelColor(int lastColor) {
-    firstPixelColor = (lastColor + 4) % 255;
-    return firstPixelColor;
   }
 
   public boolean getLimitSwitch() {
@@ -126,40 +125,29 @@ public class LEDSubsystem extends SubsystemBase {
   }
 
   public int getHue() {
-    return hue;
-  }
-  public int getShuffHue() {
     return (Integer) hue;
   }
-  public void setShuffHue(Long h) {
+  public void setHue(Long h) {
     hue = h.intValue();
   }
-
-
   public int getSat() {
-    return sat;
+    return (Integer) sat;
   }
-  public int getValue() {
-    return value;
+  public void setSat(Long s) {
+    sat = s.intValue();
   }
-
-  public void setHue(int h) {
-    hue = h;
+  public int getVal() {
+    return (Integer) value;
   }
-
-  public void setSat(int s) {
-    sat = s;
-  }
-
-  public void setValue(int v) {
-    value = v;
+  public void setVal(Long v) {
+    value = v.intValue();
   }
 
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("LEDSubsystem");
-    builder.addIntegerProperty("Hue", this::getShuffHue, this::setShuffHue);
-    // builder.addIntegerProperty("Saturation", this::getSat, this::setSat);
-    // builder.addIntegerProperty("Value", this::getValue, this::setValue);
+    builder.addIntegerProperty("Hue", this::getHue, this::setHue);
+    builder.addIntegerProperty("Saturation", this::getSat, this::setSat);
+    builder.addIntegerProperty("Value", this::getVal, this::setVal);
   }
 
 

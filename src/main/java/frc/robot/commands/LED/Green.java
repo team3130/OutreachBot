@@ -5,13 +5,10 @@
 package frc.robot.commands.LED;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
-import edu.wpi.first.wpilibj.Timer;
-
 /** An example command that uses an example subsystem. */
-public class Red extends CommandBase {
+public class Green extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final LEDSubsystem ledSubsystem;
 
@@ -20,7 +17,7 @@ public class Red extends CommandBase {
    *
    * @param // The subsystem used by this command.
    */
-  public Red(LEDSubsystem ledSubsystem) {
+  public Green(LEDSubsystem ledSubsystem) {
     this.ledSubsystem = ledSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(ledSubsystem);
@@ -29,7 +26,7 @@ public class Red extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ledSubsystem.red();
+    ledSubsystem.green();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

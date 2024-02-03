@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Intake.Resetake;
 import frc.robot.commands.Intake.Spouttake;
-import frc.robot.commands.LED.Red;
+import frc.robot.commands.LED.*;
 import frc.robot.commands.chassis.FaceTarget;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.commands.chassis.PullOut;
@@ -85,6 +85,14 @@ public class RobotContainer {
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.LBUMPER).whileTrue(new Resetake(m_intake));
       new JoystickButton(m_Gamepad, Constants.XBOXButtons.RBUMPER).whileTrue(new FaceTarget(m_chassis));
     }
+  /** LEDS **/
+  if (m_chassis.getJoystickName().equals("Controller (Xbox One For Windows)")) {
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_N).whileTrue(new Red(ledSubsystem));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_E).whileTrue(new Green(ledSubsystem));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_S).whileTrue(new Blue(ledSubsystem));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_AXS_RTRIGGER).whileTrue(new MovingRainbow(ledSubsystem));
+      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_AXS_LTRIGGER).whileTrue(new Custom(ledSubsystem));
+    }
   }
 
   public void vomitShuffleBoardData() {
@@ -94,6 +102,9 @@ public class RobotContainer {
       intake.add(m_intake);
       ShuffleboardTab shooter = Shuffleboard.getTab("Shooter");
       shooter.add(m_shooter);
+      ShuffleboardTab LEDs = Shuffleboard.getTab("LEDSubsystem");
+      shooter.add(ledSubsystem);
+
   }
   public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser) {
 
@@ -101,7 +112,7 @@ public class RobotContainer {
     m_chooser_functionality = functionalityChooser;
     configureBindings();
     //m_chassis.setDefaultCommand(new Drive(m_chassis, this));
-    ledSubsystem.setDefaultCommand(new Red(ledSubsystem));
+    ledSubsystem.setDefaultCommand(new MovingRainbow(ledSubsystem));
 
     vomitShuffleBoardData();
   }

@@ -4,24 +4,25 @@
 
 package frc.robot.commands.LED;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
-import edu.wpi.first.wpilibj.Timer;
-
 /** An example command that uses an example subsystem. */
-public class Red extends CommandBase {
+public class MovingRainbow extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final LEDSubsystem ledSubsystem;
+  private final Timer timer;
+  private double frequency = 1/60; //frequency of moving rainbow is 10 times per second;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param // The subsystem used by this command.
    */
-  public Red(LEDSubsystem ledSubsystem) {
+  public MovingRainbow(LEDSubsystem ledSubsystem) {
     this.ledSubsystem = ledSubsystem;
+    timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(ledSubsystem);
   }
@@ -29,12 +30,28 @@ public class Red extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ledSubsystem.red();
+    if(ledSubsystem.getLimitSwitch()) {
+      //ledSubsystem.movingRainbow(20);
+      ledSubsystem.gayBow();
+    }
+    else {
+      ledSubsystem.reset();
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    timer.reset();
+    timer.start();
+    if  (timer.hasElapsed(frequency))
+    if(ledSubsystem.getLimitSwitch()) {
+      //ledSubsystem.movingRainbow(ledSubsystem.getNextFirstPixelColor(ledSubsystem.getFirstPixelColor()));
+      ledSubsystem.gayBow();
+    }
+    else {
+      ledSubsystem.reset();
+    }
   }
 
   // Called once the command ends or is interrupted.
