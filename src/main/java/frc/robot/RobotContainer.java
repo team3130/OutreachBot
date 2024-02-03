@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Intake.Resetake;
 import frc.robot.commands.Intake.Spouttake;
+import frc.robot.commands.LED.Red;
 import frc.robot.commands.chassis.FaceTarget;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.commands.chassis.PullOut;
@@ -36,6 +37,7 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
+  private final LEDSubsystem ledSubsystem = new LEDSubsystem();
   protected SendableChooser<String> m_chooser_controller;
   protected  SendableChooser<String> m_chooser_functionality;
 
@@ -98,7 +100,8 @@ public class RobotContainer {
     m_chooser_controller = controllerChooser;
     m_chooser_functionality = functionalityChooser;
     configureBindings();
-    m_chassis.setDefaultCommand(new Drive(m_chassis, this));
+    //m_chassis.setDefaultCommand(new Drive(m_chassis, this));
+    ledSubsystem.setDefaultCommand(new Red(ledSubsystem));
 
     vomitShuffleBoardData();
   }
