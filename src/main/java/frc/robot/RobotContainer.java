@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -64,7 +65,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
   public void configureBindings() {
-  /** Shooter **/
+      /** Shooter **/
 //  if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
 //    new JoystickButton(m_Gamepad, 1).whileTrue(new Shoot(m_shooter));
 //  }
@@ -72,7 +73,7 @@ public class RobotContainer {
 //    new JoystickButton(m_Gamepad,  Constants.XBOXButtons.Y).whileTrue(new Shoot(m_shooter));
 //  }
 
-  /** Intake **/
+      /** Intake **/
 //  if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
 //    new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
 //    new JoystickButton(m_Gamepad, 3).whileTrue(new Spouttake(m_intake));
@@ -85,22 +86,22 @@ public class RobotContainer {
 //      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LBUMPER).whileTrue(new Resetake(m_intake));
 //      new JoystickButton(m_Gamepad, Constants.XBOXButtons.RBUMPER).whileTrue(new FaceTarget(m_chassis));
 //    }
-  /** LEDS **/
-  if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
-      new JoystickButton(m_Gamepad, 3).whileTrue(new Red(ledSubsystem));
-      new JoystickButton(m_Gamepad, 5).whileTrue(new Green(ledSubsystem));
-      new JoystickButton(m_Gamepad, 4).whileTrue(new Blue(ledSubsystem));
-      new JoystickButton(m_Gamepad, 6).whileTrue(new MovingRainbow(ledSubsystem));
-      new JoystickButton(m_Gamepad, 1).whileTrue(new Custom(ledSubsystem));
-  }
+      /** LEDS **/
 
-  else if (m_chassis.getJoystickName().equals("Controller (Xbox One For Windows)")) {
-      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_N).whileTrue(new Red(ledSubsystem));
-      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_E).whileTrue(new Green(ledSubsystem));
-      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_S).whileTrue(new Blue(ledSubsystem));
-      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_AXS_RTRIGGER).whileTrue(new MovingRainbow(ledSubsystem));
-      new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_AXS_LTRIGGER).whileTrue(new Custom(ledSubsystem));
-    }
+      if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")) {
+          new JoystickButton(m_Gamepad, 3).whileTrue(new Red(ledSubsystem));
+          new JoystickButton(m_Gamepad, 5).whileTrue(new Green(ledSubsystem));
+          new JoystickButton(m_Gamepad, 4).whileTrue(new Blue(ledSubsystem));
+          new JoystickButton(m_Gamepad, 6).whileTrue(new MovingRainbow(ledSubsystem));
+          new JoystickButton(m_Gamepad, 1).whileTrue(new Custom(ledSubsystem));
+      }
+      else if (m_chassis.getJoystickName().equals("Controller (Xbox One For Windows)")) {
+          new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_N).whileTrue(new Red(ledSubsystem));
+          new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_E).whileTrue(new Green(ledSubsystem));
+          new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_POV_S).whileTrue(new Blue(ledSubsystem));
+          new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_AXS_RTRIGGER).whileTrue(new MovingRainbow(ledSubsystem));
+          new JoystickButton(m_Gamepad, Constants.XBOXButtons.LST_AXS_LTRIGGER).whileTrue(new Custom(ledSubsystem));
+      }
   }
 
   public void vomitShuffleBoardData() {
@@ -120,8 +121,7 @@ public class RobotContainer {
     m_chooser_functionality = functionalityChooser;
     configureBindings();
     //m_chassis.setDefaultCommand(new Drive(m_chassis, this));
-    //ledSubsystem.setDefaultCommand(new MovingRainbow(ledSubsystem));
-
+    ledSubsystem.setDefaultCommand(new MovingRainbow(ledSubsystem));
     vomitShuffleBoardData();
   }
   public CommandBase pullOut(){

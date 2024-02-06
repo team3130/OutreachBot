@@ -21,12 +21,13 @@ public class LEDSubsystem extends SubsystemBase {
   private int sat = 0;
   private int value = 0;
   private int rainbowFirstPixelHue = 20;
+  boolean c = false;
 
   /** Creates a new ExampleSubsystem. */
   public LEDSubsystem() {
-    /// PWM port 9
+    // PWM port 9
     // Must be a PWM header, not MXP or DIO
-    led = new AddressableLED(0);
+    led = new AddressableLED(1);
     limitSwitch = new DigitalInput(0);
 
     // Reuse buffer
@@ -51,7 +52,7 @@ public class LEDSubsystem extends SubsystemBase {
   public void red() {
     for (var i = 0; i < ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
-      ledBuffer.setHSV(i, 0, 0, 128);
+      ledBuffer.setHSV(i, 0, 255, 128);
     }
     led.setData(ledBuffer);
   }
@@ -59,7 +60,7 @@ public class LEDSubsystem extends SubsystemBase {
   public void green() {
     for (var i = 0; i < ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
-      ledBuffer.setHSV(i, 150, 0, 128);
+      ledBuffer.setHSV(i, 60, 255, 128);
     }
     led.setData(ledBuffer);
   }
@@ -67,7 +68,7 @@ public class LEDSubsystem extends SubsystemBase {
   public void blue() {
     for (var i = 0; i < ledBuffer.getLength(); i++) {
       // Sets the specified LED to the RGB values for red
-      ledBuffer.setHSV(i, 260, 0, 128);
+      ledBuffer.setHSV(i, 125, 255, 128);
     }
     led.setData(ledBuffer);
   }
@@ -97,7 +98,7 @@ public class LEDSubsystem extends SubsystemBase {
       final var hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
       ledBuffer.setHSV(i, hue, 255, 128);
     }
-    // Increase by to make the rainbow "move"
+    // Increase by to make the rainbow "move"99999
     rainbowFirstPixelHue += 3;
     // Check bounds
     rainbowFirstPixelHue %= 180;
@@ -142,14 +143,20 @@ public class LEDSubsystem extends SubsystemBase {
   public void setVal(Long v) {
     value = v.intValue();
   }
+  public void setC() {
+    c = true;
+  }
+  public boolean getC(){
+    return c;
+  }
 
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("LEDSubsystem");
     builder.addIntegerProperty("Hue", this::getHue, this::setHue);
     builder.addIntegerProperty("Saturation", this::getSat, this::setSat);
     builder.addIntegerProperty("Value", this::getVal, this::setVal);
+    builder.addBooleanProperty("C", this::getC, null);
   }
-
 
   @Override
   public void periodic() {

@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.CANifier;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -29,9 +30,6 @@ public class Robot extends TimedRobot {
 
   private final SendableChooser<String> m_chooser_functionality = new SendableChooser<>();
 
-  AddressableLED m_led;
-  AddressableLEDBuffer m_ledBuffer;
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -52,22 +50,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Functionality", m_chooser_functionality);
 
     m_robotContainer = new RobotContainer(m_chooser_functionality, m_chooser_controller);
-
-    //createHues();
-
-    /// PWM port 9
-    // Must be a PWM header, not MXP or DIO
-    m_led = new AddressableLED(0);
-
-    // Reuse buffer
-    // Default to a length of 60, start empty output
-    // Length is expensive to set, so only set it once, then just update data
-    m_ledBuffer = new AddressableLEDBuffer(61);
-    m_led.setLength(m_ledBuffer.getLength());
-
-    // Set the data
-    m_led.setData(m_ledBuffer);
-    m_led.start();
   }
 
   /**
@@ -83,9 +65,6 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
-    // oneColor();
-    m_led.setData(m_ledBuffer);
-    CommandScheduler.getInstance().run();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -96,6 +75,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
