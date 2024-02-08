@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.lang.Math;
 
 
 public class LEDSubsystem extends SubsystemBase {
@@ -130,8 +131,15 @@ public class LEDSubsystem extends SubsystemBase {
     led.setData(ledBuffer);
   }
 
+  public void random() {
+    for (var i = 0; i < ledBuffer.getLength(); i++) {
+      // Calculate the hue - hue is easier for rainbows because the color
+      // shape is a circle so only one value needs to precess
+      ledBuffer.setHSV(i, (int) (180 * Math.random()), (int) (255 * Math.random()), 128);
+    }
+  }
 
-  public boolean getLimitSwitch() {
+  public boolean hitLimitSwitch() {
     return !limitSwitch.get();
   }
 

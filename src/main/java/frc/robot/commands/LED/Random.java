@@ -6,14 +6,17 @@
 package frc.robot.commands.LED;
 
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.LEDSubsystem;
 
 
 /** An example command that uses an example subsystem. */
-public class Blue extends CommandBase {
+public class Random extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final LEDSubsystem ledSubsystem;
+  private final Timer timer;
+  private double frequency = 1/60; //color updates 60 times a second
 
 
   /**
@@ -21,8 +24,9 @@ public class Blue extends CommandBase {
    *
    * @param // The subsystem used by this command.
    */
-  public Blue(LEDSubsystem ledSubsystem) {
+  public Random(LEDSubsystem ledSubsystem) {
     this.ledSubsystem = ledSubsystem;
+    timer = new Timer();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(ledSubsystem);
   }
@@ -31,20 +35,23 @@ public class Blue extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (!ledSubsystem.hitLimitSwitch()) {
-      ledSubsystem.blue();
-    }
+
   }
 
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!ledSubsystem.hitLimitSwitch()) {
-      ledSubsystem.blue();
-    }
-    else {
-      ledSubsystem.reset();
+    timer.reset();
+    timer.start();
+    if (timer.hasElapsed(frequency)) {
+      if (!ledSubsystem.hitLimitSwitch()) {
+        ledSubsystem.random();
+      }
+      else {
+        ledSubsystem.reset();
+      }
+      timer.stop();
     }
   }
 

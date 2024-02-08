@@ -44,13 +44,15 @@ public class MovingRainbow extends CommandBase {
   public void execute() {
     timer.reset();
     timer.start();
-    if (timer.hasElapsed(frequency) && !ledSubsystem.getLimitSwitch()) {
-      ledSubsystem.movingRainbow();
+    if (timer.hasElapsed(frequency)) {
+      if (!ledSubsystem.hitLimitSwitch()) {
+        ledSubsystem.movingRainbow();
+      }
+      else {
+        ledSubsystem.reset();
+      }
+      timer.stop();
     }
-    else {
-      ledSubsystem.reset();
-    }
-    timer.stop();
   }
 
 

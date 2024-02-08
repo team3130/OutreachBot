@@ -31,7 +31,7 @@ public class Red extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (!ledSubsystem.getLimitSwitch()) {
+    if (!ledSubsystem.hitLimitSwitch()) {
       ledSubsystem.red();
     }
   }
@@ -40,7 +40,7 @@ public class Red extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!ledSubsystem.getLimitSwitch()) {
+    if (!ledSubsystem.hitLimitSwitch()) {
       ledSubsystem.red();
     }
     else {

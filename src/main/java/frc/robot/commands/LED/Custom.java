@@ -34,7 +34,7 @@ public class Custom extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (!ledSubsystem.getLimitSwitch()) {
+    if (!ledSubsystem.hitLimitSwitch()) {
       ledSubsystem.setCustom((int) ledSubsystem.getHue(), (int) ledSubsystem.getSat(), (int) ledSubsystem.getVal());
     }
   }
@@ -43,7 +43,7 @@ public class Custom extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!ledSubsystem.getLimitSwitch()) {
+    if (!ledSubsystem.hitLimitSwitch()) {
       ledSubsystem.setCustom((int) ledSubsystem.getHue(), (int) ledSubsystem.getSat(), (int) ledSubsystem.getVal());
     }
     else {
