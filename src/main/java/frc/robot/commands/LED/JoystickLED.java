@@ -36,23 +36,18 @@ public class JoystickLED extends CommandBase {
     double x = xboxController.getRawAxis(Constants.XBOXButtons.LST_AXS_LJOYSTICKX);
     y *= 100;
     x *= 100;
+    System.out.println("x: " + x + "  y: " + y + "\n");
 
     double radius = Math.sqrt((y*y) + (x*x));
-    double theta = 0;
-
-    try {
-      theta = Math.tan(y/x);
-    } catch(ArithmeticException e) {
-      if (y > 0) {
-        theta = 90;
-      } else if (y < 0) {
-        theta = 270;
-      } else {
-        theta = 0;
-      }
+    if (radius < 10) {
+      radius = 0;
     }
+    radius = Math.pow(radius, 2) % 255;
 
-    subsystem.setCustom((int)(theta / 2), 255, (int)(radius + 155));
+    double theta = ((Math.atan2(y, x) + (2 * Math.PI))) / (2 * Math.PI);
+    int color = (int) (theta * 180);
+
+    subsystem.setCustom(color, 255, (int) radius);
   }
 
   // Called once the command ends or is interrupted.
@@ -64,4 +59,5 @@ public class JoystickLED extends CommandBase {
   public boolean isFinished() {
     return false;
   }
+
 }

@@ -2,9 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
 package frc.robot;
 
-import com.ctre.phoenix.CANifier;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.sensors.Navx;
 
+
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -24,11 +26,15 @@ import frc.robot.sensors.Navx;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
+
   private RobotContainer m_robotContainer;
+
 
   private final SendableChooser<String> m_chooser_controller = new SendableChooser<>();
 
+
   private final SendableChooser<String> m_chooser_functionality = new SendableChooser<>();
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,13 +50,17 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Controller", m_chooser_controller);
 
 
+
+
     // functionality options
     m_chooser_functionality.setDefaultOption("all", "all");
     m_chooser_functionality.addOption("limited", "limited");
     SmartDashboard.putData("Functionality", m_chooser_functionality);
 
+
     m_robotContainer = new RobotContainer(m_chooser_functionality, m_chooser_controller);
   }
+
 
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
@@ -65,18 +75,22 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+    CommandScheduler.getInstance().run();
   }
+
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
 
+
   }
+
 
   @Override
   public void disabledPeriodic() {
-
   }
+
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -86,9 +100,11 @@ public class Robot extends TimedRobot {
     // schedule the autonomous command (example)
   }
 
+
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {}
+
 
   @Override
   public void teleopInit() {
@@ -102,11 +118,14 @@ public class Robot extends TimedRobot {
     Navx.resetNavX();
     m_robotContainer.configureBindings();
 
+
   }
+
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {}
+
 
   @Override
   public void testInit() {
@@ -114,13 +133,16 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
   }
 
+
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
 
+
   /** This function is called once when the robot is first started up. */
   @Override
   public void simulationInit() {}
+
 
   /** This function is called periodically whilst in simulation. */
   @Override

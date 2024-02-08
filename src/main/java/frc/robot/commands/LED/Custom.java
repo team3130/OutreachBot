@@ -1,13 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
-
-package frc.robot.commands.LED;
-
-
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.LEDSubsystem;
 
 
 
@@ -45,7 +35,7 @@ public class Custom extends CommandBase {
   @Override
   public void initialize() {
     if (!ledSubsystem.getLimitSwitch()) {
-      ledSubsystem.setCustom();
+      ledSubsystem.setCustom((int) ledSubsystem.getHue(), (int) ledSubsystem.getSat(), (int) ledSubsystem.getVal());
     }
   }
 
@@ -54,7 +44,7 @@ public class Custom extends CommandBase {
   @Override
   public void execute() {
     if (!ledSubsystem.getLimitSwitch()) {
-      ledSubsystem.setCustom();
+      ledSubsystem.setCustom((int) ledSubsystem.getHue(), (int) ledSubsystem.getSat(), (int) ledSubsystem.getVal());
     }
     else {
       ledSubsystem.reset();
