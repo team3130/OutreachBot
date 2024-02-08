@@ -38,8 +38,19 @@ public class JoystickLED extends CommandBase {
     x *= 100;
 
     double radius = Math.sqrt((y*y) + (x*x));
+    double theta = 0;
 
-    double theta = Math.tan(y/x);
+    try {
+      theta = Math.tan(y/x);
+    } catch(ArithmeticException e) {
+      if (y > 0) {
+        theta = 90;
+      } else if (y < 0) {
+        theta = 270;
+      } else {
+        theta = 0;
+      }
+    }
 
     subsystem.setCustom((int)(theta / 2), 255, (int)(radius + 155));
   }
