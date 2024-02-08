@@ -121,7 +121,7 @@ public class RobotContainer {
     m_chooser_functionality = functionalityChooser;
     configureBindings();
     //m_chassis.setDefaultCommand(new Drive(m_chassis, this));
-    ledSubsystem.setDefaultCommand(new MovingRainbow(ledSubsystem));
+    ledSubsystem.setDefaultCommand(new JoystickLED(ledSubsystem));
     vomitShuffleBoardData();
   }
   public CommandBase pullOut(){
