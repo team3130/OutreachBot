@@ -36,6 +36,7 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
+  private final LEDSubsystem leds = new LEDSubsystem();
   protected SendableChooser<String> m_chooser_controller;
   protected  SendableChooser<String> m_chooser_functionality;
 
@@ -94,7 +95,6 @@ public class RobotContainer {
       shooter.add(m_shooter);
   }
   public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser) {
-
     m_chooser_controller = controllerChooser;
     m_chooser_functionality = functionalityChooser;
     configureBindings();
@@ -102,6 +102,12 @@ public class RobotContainer {
 
     vomitShuffleBoardData();
   }
+
+
+  public void periodic() {
+    leds.selectGreen();
+  }
+
   public CommandBase pullOut(){
     return new PullOut(m_chassis);
   }
