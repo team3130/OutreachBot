@@ -111,6 +111,7 @@ public class Chassis extends SubsystemBase {
   public void driveArcade(double moveThrottle, double turnThrottle, boolean squaredInputs) {
     m_drive.arcadeDrive(moveThrottle, turnThrottle, squaredInputs);
   }
+
   public void resetPIDLoop() {
     m_spinnyPID.reset();
     tuneTolerance();
@@ -176,22 +177,10 @@ public class Chassis extends SubsystemBase {
   }
 
   public double moveSpeed(){
-    if (getJoystickName().equals("Logitech Extreme 3D")){
-      return -RobotContainer.m_Gamepad.getRawAxis(1);
-    }
-    else if (getJoystickName().equals("Controller (Xbox One For Windows)")){
       return  -RobotContainer.m_Gamepad.getRawAxis(1); //joystick up axis value (inverted)
-    }
-    else return 0;
   }
   public double turnSpeed(){
-    if (getJoystickName().equals("Logitech Extreme 3D")){
-      return -RobotContainer.m_Gamepad.getRawAxis(2) * 0.8 ;}
-  
-    else if (getJoystickName().equals("Controller (Xbox One For Windows)")){
       return  -RobotContainer.m_Gamepad.getRawAxis(4);
-    }
-    else return 0;
   }
 
   public double movingScalar(){
