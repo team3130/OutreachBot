@@ -180,7 +180,7 @@ public class Chassis extends SubsystemBase {
       return  -RobotContainer.m_Gamepad.getRawAxis(1); //joystick up axis value (inverted)
   }
   public double turnSpeed(){
-      return  -RobotContainer.m_Gamepad.getRawAxis(4);
+      return  -RobotContainer.m_Gamepad.getRawAxis(2);
   }
 
   public double movingScalar(){

@@ -72,7 +72,7 @@ public class RobotContainer {
 
   /** Intake **/
   if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
-    new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
+    new JoystickButton(m_Gamepad, 4).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, 3).whileTrue(new Spouttake(m_intake));
     new JoystickButton(m_Gamepad, 5).whileTrue(new Resetake(m_intake));
   }
