@@ -38,6 +38,7 @@ public class RobotContainer {
   private final Intake m_intake = new Intake();
   protected SendableChooser<String> m_chooser_controller;
   protected  SendableChooser<String> m_chooser_functionality;
+  protected SendableChooser<Boolean> m_chooser_Turning;
 
 
 
@@ -93,10 +94,11 @@ public class RobotContainer {
       ShuffleboardTab shooter = Shuffleboard.getTab("Shooter");
       shooter.add(m_shooter);
   }
-  public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser) {
+  public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser, SendableChooser<double> TurnType) {
 
     m_chooser_controller = controllerChooser;
     m_chooser_functionality = functionalityChooser;
+    m_chooser_Turning = TurnType;
     configureBindings();
     m_chassis.setDefaultCommand(new Drive(m_chassis, this));
 
