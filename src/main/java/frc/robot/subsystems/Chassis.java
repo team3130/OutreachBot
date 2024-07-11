@@ -42,7 +42,7 @@ public class Chassis extends SubsystemBase {
   private final Consumer<Double[]> circleFixer;
   private final PIDController m_spinnyPID;
 
-  public double TurnType = 1;
+  public double TurnType = 1.0;
 
   private final Navx m_navx = Navx.GetInstance();
 
@@ -180,7 +180,7 @@ public class Chassis extends SubsystemBase {
       return  -RobotContainer.m_Gamepad.getRawAxis(1); //joystick up axis value (inverted)
   }
   public double turnSpeed(){
-    if (TurnType == 1) {
+    if (TurnType == 1.0) {
       return -RobotContainer.m_Gamepad.getRawAxis(2);
     }
     else {
@@ -203,9 +203,11 @@ public class Chassis extends SubsystemBase {
   }
 
   /** GETTERS AND SETTERS**/
-  public double getTurnType(){return TurnType;}
+  public double getTurnType(){
+    return TurnType;
+  }
   public void setTurnType(double turnType){
-      TurnType = turnType;
+    TurnType = turnType;
   }
   public double getNavxRotation(){ return Navx.getHeading(); } //return navx heading aka where the bot is facing [-180,180]
   public double getGoalAngle(){

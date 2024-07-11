@@ -37,8 +37,8 @@ public class RobotContainer {
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
   protected SendableChooser<String> m_chooser_controller;
-  protected  SendableChooser<String> m_chooser_functionality;
-  protected SendableChooser<Boolean> m_chooser_Turning;
+  protected SendableChooser<String> m_chooser_functionality;
+  protected SendableChooser<Double> m_chooser_Turning;
 
 
 
@@ -94,7 +94,7 @@ public class RobotContainer {
       ShuffleboardTab shooter = Shuffleboard.getTab("Shooter");
       shooter.add(m_shooter);
   }
-  public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser, SendableChooser<double> TurnType) {
+  public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser, SendableChooser<Double> TurnType) {
 
     m_chooser_controller = controllerChooser;
     m_chooser_functionality = functionalityChooser;
@@ -114,6 +114,8 @@ public class RobotContainer {
   public String returnFunctionality(){
     return m_chooser_functionality.getSelected();
   }
+
+  public Double returnTurning(){return m_chooser_Turning.getSelected();}
   /**
    * Use this to pass the autonomous
    * command to the main {@link Robot} class.
