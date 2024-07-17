@@ -26,9 +26,6 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser_controller = new SendableChooser<>();
 
   private final SendableChooser<String> m_chooser_functionality = new SendableChooser<>();
-
-  private final SendableChooser<Double> m_chooser_Turning = new SendableChooser<>();
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -48,12 +45,8 @@ public class Robot extends TimedRobot {
     m_chooser_functionality.addOption("limited", "limited");
     SmartDashboard.putData("Functionality", m_chooser_functionality);
 
-    m_chooser_Turning.setDefaultOption("Twist", 1.0);
-    m_chooser_Turning.addOption("Pivot", 2.0);
-    SmartDashboard.putData("Turning Type", m_chooser_Turning);
 
-
-    m_robotContainer = new RobotContainer(m_chooser_functionality, m_chooser_controller, m_chooser_Turning);
+    m_robotContainer = new RobotContainer(m_chooser_functionality, m_chooser_controller);
   }
 
   /**
@@ -104,7 +97,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     Navx.resetNavX();
-    m_robotContainer.configureBindings();
 
   }
 

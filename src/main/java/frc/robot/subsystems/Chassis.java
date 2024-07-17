@@ -136,6 +136,15 @@ public class Chassis extends SubsystemBase {
   public void driveForward(){
     m_drive.arcadeDrive(0.75, 0);
   }
+  public void changeDriveType(){
+    if (TurnType == 1.0) {
+      TurnType = 2.0;
+      System.out.println("turn number = 2");
+    } else {
+      TurnType = 1.0;
+      System.out.println("turn number = 1");
+    }
+  }
 
   public void stopDriving(){
     m_drive.arcadeDrive(0,0);
@@ -245,7 +254,7 @@ public class Chassis extends SubsystemBase {
     builder.addDoubleProperty("Spinny P", this::getSpinnyP, this::setSpinnyP);
     builder.addDoubleProperty("Spinny I", this::getSpinnyI, this::setSpinnyI);
     builder.addDoubleProperty("Spinny D", this::getSpinnyD, this::setSpinnyD);
-    builder.addDoubleProperty("Turn Type", this::getTurnType, this::setTurnType);
+    builder.addDoubleProperty("Turn Type", this::getTurnType, null);
     builder.addStringProperty("Controller Type", this::getJoystickName, null);
   }
 

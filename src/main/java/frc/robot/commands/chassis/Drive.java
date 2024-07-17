@@ -38,7 +38,6 @@ public class Drive extends CommandBase {
 
   @Override
   public void execute() {   //called continuously/repeatedly when the command is scheduled
-
       m_chassis.driveArcade(1.5* m_chassis.moveSpeed(), m_chassis.turnSpeed(), true); //method to drive
     }
 
