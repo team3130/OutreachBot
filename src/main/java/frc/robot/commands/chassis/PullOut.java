@@ -5,11 +5,11 @@
 package frc.robot.commands.chassis;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Chassis;
 
 /** An example command that uses an example subsystem. */
-public class PullOut extends CommandBase {
+public class PullOut extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Chassis m_chassis;
 

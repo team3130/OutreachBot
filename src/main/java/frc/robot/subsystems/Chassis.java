@@ -12,7 +12,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
@@ -180,7 +180,7 @@ public class Chassis extends SubsystemBase {
       return  -RobotContainer.m_Gamepad.getRawAxis(1); //joystick up axis value (inverted)
   }
   public double turnSpeed(){
-      return  -RobotContainer.m_Gamepad.getRawAxis(4);
+      return  -RobotContainer.m_Gamepad.getRawAxis(2);
   }
 
   public double movingScalar(){
