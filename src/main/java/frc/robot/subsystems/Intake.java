@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
@@ -39,7 +39,7 @@ public class Intake extends SubsystemBase {
 
   /** GENERAL METHODS */
 
-  public CommandBase exampleMethodCommand() {
+  public Command exampleMethodCommand() {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
     return runOnce(
@@ -49,7 +49,7 @@ public class Intake extends SubsystemBase {
             });
   }
 
-  public CommandBase takey() {
+  public Command takey() {
     // implicitly require `this`
     return this.runOnce(() -> m_intake.set(ControlMode.PercentOutput, speed));
   }

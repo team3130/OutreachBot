@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Intake.Resetake;
@@ -73,7 +73,7 @@ public class RobotContainer {
   }
   /** Intake **/
   if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
-    new JoystickButton(m_Gamepad, 2).whileTrue(new Spintake(m_intake));
+    new JoystickButton(m_Gamepad, 4).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, 3).whileTrue(new Spouttake(m_intake));
     new JoystickButton(m_Gamepad, 5).whileTrue(new Resetake(m_intake));
     new JoystickButton(m_Gamepad, 7).whileTrue(new ChangeTurnType(m_chassis));
@@ -106,7 +106,7 @@ public class RobotContainer {
 
     vomitShuffleBoardData();
   }
-  public CommandBase pullOut(){
+  public Command pullOut(){
     return new PullOut(m_chassis);
   }
 
