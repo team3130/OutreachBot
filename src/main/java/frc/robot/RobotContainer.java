@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
+import frc.robot.commands.runUmarWheel;
 import frc.robot.commands.Intake.Resetake;
 import frc.robot.commands.Intake.Spouttake;
 import frc.robot.commands.chassis.FaceTarget;
@@ -36,6 +37,7 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
+  private final UmarWheel umarWheel = new UmarWheel();
   protected SendableChooser<String> m_chooser_controller;
   protected  SendableChooser<String> m_chooser_functionality;
 
@@ -62,6 +64,9 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
   public void configureBindings() {
+
+    new JoystickButton(m_Gamepad, Constants.XBOXButtons.B).whileTrue(new runUmarWheel(umarWheel));
+
   /** Shooter **/
   if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
     new JoystickButton(m_Gamepad, 1).whileTrue(new Shoot(m_shooter));
