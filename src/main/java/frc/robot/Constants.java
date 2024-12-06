@@ -22,15 +22,15 @@ public final class Constants {
   public static boolean all = false;
   
   public static class CAN {
-    public static final int SHOOTERFLYWHEEL = 6;
-    public static final int LEFTINDEXER = 7;
-    public static final int RIGHTINDEXER = 8;
-    public static final int frontLeftDrive = 2; // TO-DO
-    public static final int frontRightDrive = 3; // TO-DO
-    public static final int backLeftDrive = 4; // TO-DO
-    public static final int backRightDrive = 5; // TO-DO
+    public static final int SHOOTERFLYWHEEL = 3;
+    public static final int LEFTINDEXER = 2;
+    public static final int RIGHTINDEXER = 4;
+    public static final int frontLeftDrive = 7; // TO-DO
+    public static final int frontRightDrive = 5; // TO-DO
+    public static final int backLeftDrive = 8; // TO-DO
+    public static final int backRightDrive = 6; // TO-DO
 
-    public static final int Intake_Motor = 9; // TO-DO
+    public static final int Intake_Motor = 1; // TO-DO
 
     public static final int PCM = 0;
     public static final int PDP = 1;

@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -15,7 +17,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+//import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -33,8 +35,8 @@ public class Chassis extends SubsystemBase {
 
   private final DifferentialDrive m_drive; // a built-in class for a method of driving
 
-  private final MotorControllerGroup m_motorsRight; //houses all the motors on the right side of the drivetrain
-  private final MotorControllerGroup m_motorsLeft; //both right and left are used as a parameter for DifferentialDrive methods
+  //private final MotorControllerGroup m_motorsRight; //houses all the motors on the right side of the drivetrain
+  //private final MotorControllerGroup m_motorsLeft; //both right and left are used as a parameter for DifferentialDrive methods
 
   /*private final SimpleMotorFeedforward m_feedforward;
   private final PIDController m_leftPIDController;
@@ -71,11 +73,8 @@ public class Chassis extends SubsystemBase {
     m_backLeftDrive.setControl(voltRequest.withOutput(Constants.Chassis.maxVoltage));
     m_backRightDrive.setControl(voltRequest.withOutput(Constants.Chassis.maxVoltage));
 
-    //turning on voltage comp
-    m_frontLeftDrive.enableVoltageCompensation(true);
+    //turning on voltage comp (only for Victor. maybe later we can make them all the same)
     m_frontRightDrive.enableVoltageCompensation(true);
-    m_backLeftDrive.enableVoltageCompensation(true);
-    m_backRightDrive.enableVoltageCompensation(true);
 
     //inverting one side of the drivetrain since the motors are facing different directions
     m_frontRightDrive.setInverted(true);
@@ -84,11 +83,14 @@ public class Chassis extends SubsystemBase {
     m_frontLeftDrive.setInverted(false);
 
     //setting up the motor controller groups
-    m_motorsRight = new MotorControllerGroup(m_frontRightDrive, m_backRightDrive);
-    m_motorsLeft = new MotorControllerGroup(m_frontLeftDrive, m_backLeftDrive);
+    //m_motorsRight = new MotorControllerGroup(m_frontRightDrive, m_backRightDrive);
+    //m_motorsLeft = new MotorControllerGroup(m_frontLeftDrive, m_backLeftDrive);
+
+    m_backRightDrive.setControl(new Follower(m_frontRightDrive.getDeviceID(), false));
+    m_backLeftDrive.setControl(new Follower(m_frontLeftDrive.getDeviceID(), false));
 
     //setting up the DifferentialDrive
-    m_drive = new DifferentialDrive(m_motorsLeft, m_motorsRight);
+    m_drive = new DifferentialDrive(m_frontLeftDrive, m_frontRightDrive);
 
     //setting up controller deadbands (so tiny tiny controller values don't move the robot)
     m_drive.setDeadband(Constants.Chassis.kDriveDeadband);
@@ -173,12 +175,12 @@ public class Chassis extends SubsystemBase {
 
   //configures the maximum ramping rate of the drivetrain(value of 0 disables ramping)
   //parameter of maxRampRateSeconds is the desired time to go from neutral to full throttle
+  //changed for Pheonix 6 migration
   public void configRampRate(double maxRampRateSeconds) {
     m_frontRightDrive.configOpenloopRamp(maxRampRateSeconds);
-    m_frontLeftDrive.configOpenloopRamp(maxRampRateSeconds);
-    m_backRightDrive.configOpenloopRamp(maxRampRateSeconds);
-    m_backLeftDrive.configOpenloopRamp(maxRampRateSeconds);
-
+    m_frontLeftDrive.getConfigurator().apply(new OpenLoopRampsConfigs().withDutyCycleOpenLoopRampPeriod(maxRampRateSeconds));
+    m_backRightDrive.getConfigurator().apply(new OpenLoopRampsConfigs().withDutyCycleOpenLoopRampPeriod(maxRampRateSeconds));
+    m_backLeftDrive.getConfigurator().apply(new OpenLoopRampsConfigs().withDutyCycleOpenLoopRampPeriod(maxRampRateSeconds));
   }
 
   public double moveSpeed(){
