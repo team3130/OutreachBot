@@ -7,6 +7,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -22,9 +26,9 @@ import java.util.function.Consumer;
 
 public class Chassis extends SubsystemBase {
   public String joystickName = DriverStation.getJoystickName(0);
-  private final WPI_TalonFX m_frontLeftDrive; //front left drivetrain motor
-  private final WPI_TalonFX m_backLeftDrive;
-  private final WPI_TalonFX m_backRightDrive;
+  private final TalonFX m_frontLeftDrive; //front left drivetrain motor
+  private final TalonFX m_backLeftDrive;
+  private final TalonFX m_backRightDrive;
   private final WPI_VictorSPX m_frontRightDrive; //this motor uses a different motor controller aka a victor
 
   private final DifferentialDrive m_drive; // a built-in class for a method of driving
@@ -41,6 +45,7 @@ public class Chassis extends SubsystemBase {
   private double chassisSpinD = 0.0015;
   private final Consumer<Double[]> circleFixer;
   private final PIDController m_spinnyPID;
+  private final VoltageOut voltRequest = new VoltageOut(0);
 
 
 
@@ -49,22 +54,22 @@ public class Chassis extends SubsystemBase {
   
   public Chassis() {
     //instantiating all motors
-    m_frontLeftDrive = new WPI_TalonFX(Constants.CAN.frontLeftDrive);
-    m_backLeftDrive = new WPI_TalonFX(Constants.CAN.backLeftDrive);
-    m_backRightDrive = new WPI_TalonFX(Constants.CAN.backRightDrive);
+    m_frontLeftDrive = new TalonFX(Constants.CAN.frontLeftDrive);
+    m_backLeftDrive = new TalonFX(Constants.CAN.backLeftDrive);
+    m_backRightDrive = new TalonFX(Constants.CAN.backRightDrive);
     m_frontRightDrive = new WPI_VictorSPX(Constants.CAN.frontRightDrive);
 
     //good practice to put all motors to default
-    m_frontLeftDrive.configFactoryDefault();
+    m_frontLeftDrive.getConfigurator().apply(new TalonFXConfiguration());
     m_frontRightDrive.configFactoryDefault();
-    m_backLeftDrive.configFactoryDefault();
-    m_backRightDrive.configFactoryDefault();
+    m_backLeftDrive.getConfigurator().apply(new TalonFXConfiguration());
+    m_backRightDrive.getConfigurator().apply(new TalonFXConfiguration());
 
     //good practice to set voltage comp saturation to help with battery loss
-    m_frontLeftDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_frontLeftDrive.setControl(voltRequest.withOutput(Constants.Chassis.maxVoltage));
     m_frontRightDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
-    m_backLeftDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
-    m_backRightDrive.configVoltageCompSaturation(Constants.Chassis.maxVoltage);
+    m_backLeftDrive.setControl(voltRequest.withOutput(Constants.Chassis.maxVoltage));
+    m_backRightDrive.setControl(voltRequest.withOutput(Constants.Chassis.maxVoltage));
 
     //turning on voltage comp
     m_frontLeftDrive.enableVoltageCompensation(true);
@@ -154,15 +159,15 @@ public class Chassis extends SubsystemBase {
   //used to configure brake mode (resists motion) or coast mode (doesn't) on all drive motors
   public void configureBrakeMode(boolean brake) {
     if (brake) {
-      m_frontLeftDrive.setNeutralMode(NeutralMode.Brake);
+      m_frontLeftDrive.setNeutralMode(NeutralModeValue.Brake);
       m_frontRightDrive.setNeutralMode(NeutralMode.Brake);
-      m_backLeftDrive.setNeutralMode(NeutralMode.Brake);
-      m_backRightDrive.setNeutralMode(NeutralMode.Brake);
+      m_backLeftDrive.setNeutralMode(NeutralModeValue.Brake);
+      m_backRightDrive.setNeutralMode(NeutralModeValue.Brake);
     } else {
-      m_frontLeftDrive.setNeutralMode(NeutralMode.Coast);
+      m_frontLeftDrive.setNeutralMode(NeutralModeValue.Coast);
       m_frontRightDrive.setNeutralMode(NeutralMode.Coast);
-      m_backLeftDrive.setNeutralMode(NeutralMode.Coast);
-      m_backRightDrive.setNeutralMode(NeutralMode.Coast);
+      m_backLeftDrive.setNeutralMode(NeutralModeValue.Coast);
+      m_backRightDrive.setNeutralMode(NeutralModeValue.Coast);
     }
   }
 
