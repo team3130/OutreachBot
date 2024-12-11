@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Intake.Resetake;
 import frc.robot.commands.Intake.Spouttake;
+import frc.robot.commands.chassis.ChangeTurnType;
 import frc.robot.commands.chassis.FaceTarget;
 import frc.robot.commands.chassis.Drive;
 import frc.robot.commands.chassis.PullOut;
@@ -36,8 +37,9 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final Chassis m_chassis = new Chassis();
   private final Intake m_intake = new Intake();
+  private final ChangeTurnType m_changeType = new ChangeTurnType(m_chassis);
   protected SendableChooser<String> m_chooser_controller;
-  protected  SendableChooser<String> m_chooser_functionality;
+  protected SendableChooser<String> m_chooser_functionality;
 
 
 
@@ -69,12 +71,12 @@ public class RobotContainer {
   else if (m_chassis.getJoystickName().equals("Controller (Xbox One For Windows)")){
     new JoystickButton(m_Gamepad,  Constants.XBOXButtons.Y).whileTrue(new Shoot(m_shooter));
   }
-
   /** Intake **/
   if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")){
     new JoystickButton(m_Gamepad, 4).whileTrue(new Spintake(m_intake));
     new JoystickButton(m_Gamepad, 3).whileTrue(new Spouttake(m_intake));
     new JoystickButton(m_Gamepad, 5).whileTrue(new Resetake(m_intake));
+    new JoystickButton(m_Gamepad, 7).whileTrue(new ChangeTurnType(m_chassis));
   }
 
   else if (m_chassis.getJoystickName().equals("Controller (Xbox One For Windows)")){
@@ -92,6 +94,8 @@ public class RobotContainer {
       intake.add(m_intake);
       ShuffleboardTab shooter = Shuffleboard.getTab("Shooter");
       shooter.add(m_shooter);
+      ShuffleboardTab turnChange = Shuffleboard.getTab("Turn");
+      turnChange.add(m_changeType);
   }
   public RobotContainer(SendableChooser<String> functionalityChooser, SendableChooser<String> controllerChooser) {
 

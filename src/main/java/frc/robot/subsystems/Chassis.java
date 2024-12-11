@@ -42,7 +42,7 @@ public class Chassis extends SubsystemBase {
   private final Consumer<Double[]> circleFixer;
   private final PIDController m_spinnyPID;
 
-
+  public double TurnType = 1.0;
 
   private final Navx m_navx = Navx.GetInstance();
 
@@ -136,6 +136,15 @@ public class Chassis extends SubsystemBase {
   public void driveForward(){
     m_drive.arcadeDrive(0.75, 0);
   }
+  public void changeDriveType(){
+    if (TurnType == 1.0) {
+      TurnType = 2.0;
+      System.out.println("turn number = 2");
+    } else {
+      TurnType = 1.0;
+      System.out.println("turn number = 1");
+    }
+  }
 
   public void stopDriving(){
     m_drive.arcadeDrive(0,0);
@@ -180,7 +189,12 @@ public class Chassis extends SubsystemBase {
       return  -RobotContainer.m_Gamepad.getRawAxis(1); //joystick up axis value (inverted)
   }
   public double turnSpeed(){
-      return  -RobotContainer.m_Gamepad.getRawAxis(2);
+    if (TurnType == 1.0) {
+      return -RobotContainer.m_Gamepad.getRawAxis(2);
+    }
+    else {
+      return -RobotContainer.m_Gamepad.getRawAxis(0);
+    }
   }
 
   public double movingScalar(){
@@ -198,6 +212,12 @@ public class Chassis extends SubsystemBase {
   }
 
   /** GETTERS AND SETTERS**/
+  public double getTurnType(){
+    return TurnType;
+  }
+  public void setTurnType(double turnType){
+    TurnType = turnType;
+  }
   public double getNavxRotation(){ return Navx.getHeading(); } //return navx heading aka where the bot is facing [-180,180]
   public double getGoalAngle(){
     return angle;
@@ -234,7 +254,7 @@ public class Chassis extends SubsystemBase {
     builder.addDoubleProperty("Spinny P", this::getSpinnyP, this::setSpinnyP);
     builder.addDoubleProperty("Spinny I", this::getSpinnyI, this::setSpinnyI);
     builder.addDoubleProperty("Spinny D", this::getSpinnyD, this::setSpinnyD);
-
+    builder.addDoubleProperty("Turn Type", this::getTurnType, null);
     builder.addStringProperty("Controller Type", this::getJoystickName, null);
   }
 
