@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.math.controller.PIDController;
@@ -22,9 +22,9 @@ import java.util.function.Consumer;
 
 public class Chassis extends SubsystemBase {
   public String joystickName = DriverStation.getJoystickName(0);
-  private final WPI_TalonFX m_frontLeftDrive; //front left drivetrain motor
-  private final WPI_TalonFX m_backLeftDrive;
-  private final WPI_TalonFX m_backRightDrive;
+  private final WPI_TalonSRX m_frontLeftDrive; //front left drivetrain motor
+  private final WPI_TalonSRX m_backLeftDrive;
+  private final WPI_TalonSRX m_backRightDrive;
   private final WPI_VictorSPX m_frontRightDrive; //this motor uses a different motor controller aka a victor
 
   private final DifferentialDrive m_drive; // a built-in class for a method of driving
@@ -49,9 +49,9 @@ public class Chassis extends SubsystemBase {
   
   public Chassis() {
     //instantiating all motors
-    m_frontLeftDrive = new WPI_TalonFX(Constants.CAN.frontLeftDrive);
-    m_backLeftDrive = new WPI_TalonFX(Constants.CAN.backLeftDrive);
-    m_backRightDrive = new WPI_TalonFX(Constants.CAN.backRightDrive);
+    m_frontLeftDrive = new WPI_TalonSRX(Constants.CAN.frontLeftDrive);
+    m_backLeftDrive = new WPI_TalonSRX(Constants.CAN.backLeftDrive);
+    m_backRightDrive = new WPI_TalonSRX(Constants.CAN.backRightDrive);
     m_frontRightDrive = new WPI_VictorSPX(Constants.CAN.frontRightDrive);
 
     //good practice to put all motors to default
