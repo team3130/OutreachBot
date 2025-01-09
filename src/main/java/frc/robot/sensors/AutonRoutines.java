@@ -3,6 +3,7 @@ package frc.robot.sensors;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Chassis;
+import frc.robot.subsystems.Intake;
 
 public class AutonRoutines {
 
@@ -16,7 +17,7 @@ public class AutonRoutines {
     }
 
     public Command driveAndIntake() {
-        return Commands.sequence(
-                        intake.takey());
+        return Commands.sequence();
+                        //intake.takey());
     }
 }

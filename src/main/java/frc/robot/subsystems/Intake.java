@@ -27,20 +27,6 @@ public class Intake extends SubsystemBase {
 
 
   /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-  public Command exampleMethodCommand() {
-    // Inline construction of command goes here.
-    // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return runOnce(
-        () -> {
-          /* one-time action goes here */
-        });
-  }
-
-  /**
    * An example method querying a boolean state of the subsystem (for example, a digital sensor).
    *
    * @return value of some boolean subsystem state, such as a digital sensor.
