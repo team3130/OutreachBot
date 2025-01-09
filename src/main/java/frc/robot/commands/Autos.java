@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import frc.robot.commands.Intake.Spintake;
 import frc.robot.commands.chassis.PullOut;
 import frc.robot.subsystems.Chassis;
 import frc.robot.subsystems.ExampleSubsystem;
