@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Intake.Shawty_Shooter;
+import frc.robot.commands.Intake.outakerrr;
 import frc.robot.commands.chassis.ChangeTurnType;
 import frc.robot.commands.chassis.FaceTarget;
 import frc.robot.commands.chassis.Drive;
@@ -69,6 +70,7 @@ public class RobotContainer {
   if (m_chassis.getJoystickName().equals("Logitech Extreme 3D")) {
       new JoystickButton(m_Gamepad, 5).whileTrue(new Shawty_Shooter(m_intake));
       new JoystickButton(m_Gamepad, 7).whileTrue(new ChangeTurnType(m_chassis));
+      new JoystickButton(m_Gamepad, 3).whileTrue(new outakerrr(m_intake));
   }
 
   else if (m_chassis.getJoystickName().equals("Controller (Xbox One For Windows)")){
