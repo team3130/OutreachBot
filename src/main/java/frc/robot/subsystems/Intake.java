@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
     Motor1.setInverted(false);
   }
   public void Motorrun() {
-    Motor1.set(0.5);
+    Motor1.set(0.8);
   }
   public void Motorstop() {
     Motor1.stopMotor();
