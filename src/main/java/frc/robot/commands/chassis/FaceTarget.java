@@ -16,7 +16,8 @@ public class FaceTarget extends Command {
   public FaceTarget(Chassis chassis) {
     //mapping to object passed through parameter
     m_chassis = chassis;
-    m_requirements.add(chassis);
+    //FIGURE THIS OUT maybe.
+    //m_requirements.add(chassis);
   }
 
   /**
